@@ -1,5 +1,5 @@
 /* Border Companion – offline support. Bump VERSION whenever index.html changes. */
-const VERSION = "bc-2026-11-08";
+const VERSION = "bc-2026-11-08b";
 const SHELL = ["./", "./index.html", "./manifest.json", "./icons/icon-180.png", "./icons/icon-192.png", "./icons/icon-512.png"];
 self.addEventListener("install", e => {
   e.waitUntil(caches.open(VERSION).then(c => Promise.all(SHELL.map(u => c.add(u).catch(() => null)))).then(() => self.skipWaiting()));

@@ -76,6 +76,82 @@ Note: guidance only, not legal advice. Always confirm with the official authorit
 
 ---
 
+## Français (fr-FR)
+
+**Nom de l'application (30 max) :**
+Border Companion: Droit voyage
+
+**Description courte (80 max) :**
+Visas, entrée, séjour et lois locales dans 28 pays, selon votre nationalité.
+
+**Description complète :**
+Border Companion est votre guide juridique avant le départ et pendant votre séjour.
+
+Choisissez votre passeport, le motif du voyage et la destination : l'application vous dit aussitôt si vous avez besoin d'un visa, si vous pouvez entrer sans visa, avec une autorisation électronique ou avec un visa à l'arrivée, avec un bouton qui ouvre le site officiel de demande, sans intermédiaire.
+
+✈️ Au programme :
+• Conditions d'entrée selon votre nationalité dans 28 pays : Europe, Golfe, monde arabe, Türkiye, États-Unis, Canada et Asie.
+• Séjour et immigration : autorité compétente, enregistrements obligatoires et sanctions en cas de dépassement.
+• Monnaie et plafonds de déclaration d'espèces.
+• Conduite : limitations de vitesse, péages, permis international.
+• Lois et coutumes qui peuvent causer des ennuis aux visiteurs.
+• Attention : arnaques courantes et faux sites dans chaque pays.
+• Numéros d'urgence et bouton pour trouver votre ambassade.
+• Que faire si… ? Passeport perdu, fin de séjour, contrôle de police, accident de voiture.
+
+🧳 Outils de voyage :
+• Mes voyages : liste de documents prête pour chaque voyage, avec vérification automatique de la validité du passeport.
+• Compteur de séjour, y compris la règle Schengen des 90 jours sur 180.
+• Mes échéances : alertes avant l'expiration du passeport, du visa ou du titre de séjour, et rappels dans l'agenda.
+• Sauvegarde et restauration.
+
+🔒 Confidentialité : ni compte, ni publicité, ni suivi. Vos données restent sur votre appareil.
+🌐 Quatre langues : arabe, anglais, français, allemand.
+📶 Fonctionne hors ligne après la première ouverture.
+🔄 Informations vérifiées chaque mois.
+
+Remarque : informations indicatives, pas un conseil juridique. Vérifiez toujours auprès de l'autorité officielle ou de l'ambassade avant de partir.
+
+---
+
+## Deutsch (de-DE)
+
+**App-Name (max. 30):**
+Border Companion: Reiserecht
+
+**Kurzbeschreibung (max. 80):**
+Visa, Einreise, Aufenthalt und lokale Gesetze in 28 Ländern, je nach Pass.
+
+**Vollständige Beschreibung:**
+Border Companion ist dein rechtlicher Begleiter vor der Reise und während des Aufenthalts.
+
+Wähle deinen Pass, den Reisezweck und das Ziel – die App sagt dir sofort, ob du ein Visum brauchst, visumfrei einreisen kannst, eine elektronische Genehmigung benötigst oder ein Visum bei Ankunft bekommst. Ein Knopf öffnet direkt die offizielle Antragsseite, ohne Vermittler.
+
+✈️ Das steckt drin:
+• Einreisestatus für deine Staatsangehörigkeit in 28 Ländern: Europa, Golfstaaten, arabische Welt, Türkiye, USA, Kanada und Asien.
+• Aufenthalt und Einwanderung: zuständige Behörde, Meldepflichten und Strafen bei Überschreitung.
+• Währung und Bargeld-Meldegrenzen.
+• Autofahren: Tempolimits, Maut, internationaler Führerschein.
+• Gesetze und Bräuche, die Besuchern Ärger bringen können.
+• Vorsicht: typische Touristenfallen und gefälschte Websites in jedem Land.
+• Notrufnummern und ein Knopf, um deine Botschaft zu finden.
+• Was tun, wenn …? Pass verloren, Aufenthalt läuft ab, Polizeikontrolle, Autounfall.
+
+🧳 Reise-Werkzeuge:
+• Meine Reisen: fertige Dokumenten-Checkliste pro Reise mit automatischer Prüfung der Passgültigkeit.
+• Aufenthaltszähler inklusive Schengen-Regel 90 Tage in 180.
+• Meine Termine: Warnung vor Ablauf von Pass, Visum oder Aufenthaltstitel, dazu Kalendererinnerungen.
+• Sichern und Wiederherstellen.
+
+🔒 Datenschutz: keine Konten, keine Werbung, kein Tracking. Deine Daten bleiben auf deinem Gerät.
+🌐 Vier Sprachen: Arabisch, Englisch, Französisch, Deutsch.
+📶 Funktioniert nach dem ersten Öffnen offline.
+🔄 Informationen werden monatlich geprüft.
+
+Hinweis: nur zur Orientierung, keine Rechtsberatung. Prüfe vor der Reise immer bei der offiziellen Behörde oder Botschaft.
+
+---
+
 ## Other fields
 - **Category:** Travel & Local
 - **Privacy policy URL:** https://reshy20-cyber.github.io/border-companion/privacy.html

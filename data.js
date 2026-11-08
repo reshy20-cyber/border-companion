@@ -29,6 +29,8 @@ const BIGCASH=q(["صرّح عن المبالغ النقدية الكبيرة ع�
 const E112=[[q("طوارئ","Emergency","Urgences","Notruf"),"112"]];
 
 /* ---------- Countries ---------- */
+/* Builder for Schengen countries: shared entry, residence and cash rules */
+const SCHC=(id,code,n,cur,side,resSrc,drive,laws,warn,sos,money)=>({id,code,n,cur,side,entry:schEntry,entrySrc:EES,res:SCHRES,resSrc,money:money||one(EUCASH),drive,laws,warn,sos});
 const C=[
 {id:"gb",code:"GB",n:q("بريطانيا","United Kingdom","Royaume-Uni","Vereinigtes Königreich"),cur:"GBP £",side:"left",
  entry:q(["كل الزوار ما عدا البريطانيين والإيرلنديين يحتاجون إذناً مسبقاً منذ 25 فبراير 2026.","الجنسيات المعفاة من الفيزا (ومنها مواطنو دول الخليج) تحتاج تصريح ETA الإلكتروني: 20 جنيهاً، صالح سنتين ولعدة زيارات.","الجنسيات الأخرى تحتاج فيزا زيارة (Standard Visitor Visa)."],
@@ -506,6 +508,205 @@ const C=[
  laws:q(["حمل أي سلاح أو ذخيرة، ولو رصاصة واحدة، جريمة خطيرة."],["Carrying any weapon or ammunition, even one bullet, is a serious crime."],["Porter une arme ou des munitions, même une seule balle, est un délit grave."],["Waffen oder Munition, selbst eine einzelne Patrone, sind eine schwere Straftat."]),
  warn:q(["راجع تحذيرات السفر لكل ولاية، فبعض الولايات خطرة جداً.","استخدم الصرافات الآلية داخل البنوك فقط لتجنب نسخ البطاقة."],["Check travel advice by state; some states are very dangerous.","Use ATMs inside banks only to avoid card skimming."],["Consultez les conseils par État ; certains sont très dangereux.","Utilisez uniquement les distributeurs dans les banques pour éviter le skimming."],["Reisehinweise je Bundesstaat prüfen; manche sind sehr gefährlich.","Nur Geldautomaten in Banken nutzen, um Skimming zu vermeiden."]),
  sos:[[q("طوارئ","Emergency","Urgences","Notruf"),"911"]]}
+,
+SCHC("pt","PT",q("البرتغال","Portugal","Portugal","Portugal"),"EUR €","right",{u:"https://aima.gov.pt",t:"aima.gov.pt"},
+ q(["50 كم/س في المدن، 90 خارجها، 120 على الطرق السريعة.","بعض الطرق السريعة رسومها إلكترونية فقط؛ اسأل شركة التأجير عن جهاز Via Verde."],["50 km/h in towns, 90 outside, 120 on motorways.","Some motorways have electronic-only tolls; ask your rental company about Via Verde."],["50 km/h en ville, 90 hors agglomération, 120 sur autoroute.","Certaines autoroutes ont un péage uniquement électronique ; demandez au loueur le badge Via Verde."],["50 km/h innerorts, 90 außerorts, 120 auf Autobahnen.","Manche Autobahnen haben nur elektronische Maut; beim Vermieter nach Via Verde fragen."]),
+ q(["احمل جوازك أو هويتك؛ الشرطة قد تطلبه."],["Carry your passport or ID; police may ask for it."],["Ayez votre passeport ou pièce d'identité ; la police peut la demander."],["Pass oder Ausweis mitführen; die Polizei kann ihn verlangen."]),
+ q(["في لشبونة يعرض باعة في الشارع «مخدرات» مزيفة؛ تجاهلهم تماماً.","احذر النشالين في الترام 28."],["In Lisbon, street sellers offer fake 'drugs'; ignore them completely.","Watch for pickpockets on tram 28."],["À Lisbonne, des vendeurs de rue proposent de la fausse « drogue » ; ignorez-les.","Attention aux pickpockets dans le tram 28."],["In Lissabon bieten Straßenverkäufer gefälschte „Drogen“ an; komplett ignorieren.","Vorsicht vor Taschendieben in der Straßenbahn 28."]),
+ E112),
+SCHC("be","BE",q("بلجيكا","Belgium","Belgique","Belgien"),"EUR €","right",{u:"https://dofi.ibz.be",t:"dofi.ibz.be"},
+ q(["30 كم/س في معظم بروكسل، 70 إلى 90 خارج المدن، 120 على الطرق السريعة.","مناطق الانبعاثات المنخفضة في بروكسل وأنتويرب وغنت تتطلب تسجيل السيارات الأجنبية مسبقاً."],["30 km/h in most of Brussels, 70–90 outside towns, 120 on motorways.","Low-emission zones in Brussels, Antwerp and Ghent require foreign cars to register in advance."],["30 km/h dans la majeure partie de Bruxelles, 70–90 hors agglomération, 120 sur autoroute.","Les zones à basses émissions de Bruxelles, Anvers et Gand exigent l'enregistrement préalable des voitures étrangères."],["30 km/h in weiten Teilen Brüssels, 70–90 außerorts, 120 auf Autobahnen.","Umweltzonen in Brüssel, Antwerpen und Gent verlangen eine Vorab-Registrierung ausländischer Autos."]),
+ q(["للإقامة الطويلة سجّل عنوانك في البلدية خلال 8 أيام."],["For long stays, register your address at the town hall within 8 days."],["Pour un long séjour, déclarez votre adresse à la commune sous 8 jours."],["Bei längerem Aufenthalt Adresse binnen 8 Tagen bei der Gemeinde melden."]),
+ q(["احذر النشالين في محطة بروكسل الجنوبية (Midi) ومحطة الشمال."],["Watch for pickpockets at Brussels-Midi and Brussels-North stations."],["Attention aux pickpockets aux gares de Bruxelles-Midi et Bruxelles-Nord."],["Vorsicht vor Taschendieben an den Bahnhöfen Brüssel-Süd und Brüssel-Nord."]),
+ [...E112,[q("شرطة","Police","Police","Polizei"),"101"]]),
+SCHC("lu","LU",q("لوكسمبورغ","Luxembourg","Luxembourg","Luxemburg"),"EUR €","right",{u:"https://guichet.public.lu",t:"guichet.public.lu"},
+ q(["50 كم/س في المدن، 90 خارجها، 130 على الطرق السريعة (110 عند المطر)."],["50 km/h in towns, 90 outside, 130 on motorways (110 in rain)."],["50 km/h en ville, 90 hors agglomération, 130 sur autoroute (110 par pluie)."],["50 km/h innerorts, 90 außerorts, 130 auf Autobahnen (110 bei Regen)."]),
+ q(["المواصلات العامة مجانية في كل البلاد."],["Public transport is free nationwide."],["Les transports publics sont gratuits dans tout le pays."],["Öffentliche Verkehrsmittel sind landesweit kostenlos."]),
+ q(["الفنادق قليلة ومرتفعة الأسعار؛ احجز مبكراً."],["Hotels are few and expensive; book early."],["Les hôtels sont rares et chers ; réservez tôt."],["Hotels sind knapp und teuer; früh buchen."]),
+ [...E112,[q("شرطة","Police","Police","Polizei"),"113"]]),
+SCHC("dk","DK",q("الدنمارك","Denmark","Danemark","Dänemark"),"DKK kr","right",{u:"https://www.nyidanmark.dk",t:"nyidanmark.dk"},
+ q(["50 كم/س في المدن، 80 خارجها، 130 على الطرق السريعة.","الأضواء الأمامية يجب أن تكون مشغلة دائماً."],["50 km/h in towns, 80 outside, 130 on motorways.","Dipped headlights must always be on."],["50 km/h en ville, 80 hors agglomération, 130 sur autoroute.","Les feux de croisement doivent toujours être allumés."],["50 km/h innerorts, 80 außerorts, 130 auf Autobahnen.","Abblendlicht muss immer an sein."]),
+ q(["تغطية الوجه بالكامل في الأماكن العامة ممنوعة قانوناً."],["Full face coverings in public are banned by law."],["La dissimulation du visage dans l'espace public est interdite."],["Gesichtsverhüllung in der Öffentlichkeit ist gesetzlich verboten."]),
+ q(["الدراجات لها الأولوية في المدن؛ انتبه قبل عبور مساراتها."],["Bikes have priority in cities; look before crossing bike lanes."],["Les vélos sont prioritaires en ville ; regardez avant de traverser les pistes."],["Fahrräder haben in Städten Vorrang; vor dem Überqueren von Radwegen schauen."]),
+ [...E112,[q("شرطة","Police","Police","Polizei"),"114"]]),
+SCHC("se","SE",q("السويد","Sweden","Suède","Schweden"),"SEK kr","right",{u:"https://www.migrationsverket.se",t:"migrationsverket.se"},
+ q(["الأضواء مشغلة دائماً، وإطارات الشتاء إلزامية من ديسمبر إلى مارس في ظروف الشتاء."],["Headlights always on; winter tyres are mandatory Dec–Mar in winter conditions."],["Feux toujours allumés ; pneus hiver obligatoires de déc. à mars par temps hivernal."],["Licht immer an; Winterreifen Dez.–März bei winterlichen Verhältnissen Pflicht."]),
+ q(["كثير من المحلات والحافلات لا تقبل النقد إطلاقاً؛ احمل بطاقة."],["Many shops and buses don't accept cash at all; carry a card."],["Beaucoup de commerces et de bus refusent les espèces ; ayez une carte."],["Viele Geschäfte und Busse nehmen gar kein Bargeld; Karte mitnehmen."]),
+ q(["انتبه للحيوانات البرية (الأيائل) على الطرق خاصة ليلاً."],["Watch for wildlife (moose) on roads, especially at night."],["Attention aux animaux sauvages (élans) sur la route, surtout la nuit."],["Auf Wildtiere (Elche) auf der Straße achten, besonders nachts."]),
+ E112),
+SCHC("no","NO",q("النرويج","Norway","Norvège","Norwegen"),"NOK kr","right",{u:"https://www.udi.no",t:"udi.no"},
+ q(["غرامات السرعة مرتفعة جداً؛ الحد غالباً 80 خارج المدن و90 إلى 110 على الطرق السريعة.","رسوم الطرق والأنفاق إلكترونية (AutoPASS)؛ اسأل شركة التأجير."],["Speeding fines are very high; limits are usually 80 outside towns and 90–110 on motorways.","Road and tunnel tolls are electronic (AutoPASS); ask your rental company."],["Les amendes de vitesse sont très élevées ; limites souvent 80 hors agglomération et 90–110 sur autoroute.","Péages électroniques (AutoPASS) ; renseignez-vous auprès du loueur."],["Tempoverstöße sind sehr teuer; meist 80 außerorts und 90–110 auf Autobahnen.","Maut ist elektronisch (AutoPASS); beim Vermieter nachfragen."]),
+ q(["المشروبات الكحولية القوية تُباع فقط في متاجر الدولة (Vinmonopolet)."],["Strong alcohol is sold only in state shops (Vinmonopolet)."],["L'alcool fort n'est vendu que dans les magasins d'État (Vinmonopolet)."],["Starker Alkohol wird nur in staatlichen Läden (Vinmonopolet) verkauft."]),
+ q(["الطقس في الجبال يتغير بسرعة؛ لا تتنزه بدون معدات مناسبة."],["Mountain weather changes fast; don't hike without proper gear."],["La météo en montagne change vite ; ne randonnez pas sans équipement."],["Bergwetter schlägt schnell um; nicht ohne passende Ausrüstung wandern."]),
+ [[q("شرطة","Police","Police","Polizei"),"112"],[q("إسعاف","Ambulance","SAMU","Rettung"),"113"],[q("إطفاء","Fire","Pompiers","Feuerwehr"),"110"]],
+ q(["النرويج ليست في الاتحاد الأوروبي: صرّح عن النقد الذي يتجاوز 25,000 كرونة."],["Norway is not in the EU: declare cash above NOK 25,000."],["La Norvège n'est pas dans l'UE : déclarez les espèces au-delà de 25 000 NOK."],["Norwegen ist nicht in der EU: Bargeld über 25.000 NOK anmelden."])),
+SCHC("fi","FI",q("فنلندا","Finland","Finlande","Finnland"),"EUR €","right",{u:"https://migri.fi",t:"migri.fi"},
+ q(["الأضواء مشغلة دائماً، وإطارات الشتاء إلزامية من ديسمبر إلى فبراير."],["Headlights always on; winter tyres mandatory Dec–Feb."],["Feux toujours allumés ; pneus hiver obligatoires de déc. à févr."],["Licht immer an; Winterreifen Dez.–Feb. Pflicht."]),
+ q(["بعض الغرامات المرورية تُحسب حسب دخلك، وقد تكون كبيرة جداً."],["Some traffic fines are based on your income and can be very large."],["Certaines amendes sont calculées selon vos revenus et peuvent être très élevées."],["Manche Bußgelder richten sich nach dem Einkommen und können sehr hoch sein."]),
+ q(["الشتاء قاسٍ والنهار قصير جداً في الشمال؛ خطط لرحلاتك جيداً."],["Winters are harsh and days very short in the north; plan carefully."],["Hivers rudes et jours très courts dans le nord ; planifiez bien."],["Harte Winter und sehr kurze Tage im Norden; gut planen."]),
+ E112),
+SCHC("is","IS",q("آيسلندا","Iceland","Islande","Island"),"ISK kr","right",{u:"https://utl.is",t:"utl.is"},
+ q(["القيادة خارج الطرق ممنوعة وغرامتها كبيرة.","الطرق الجبلية (F) للسيارات رباعية الدفع فقط، وتُغلق في الشتاء."],["Off-road driving is banned with heavy fines.","Highland F-roads are for 4x4s only and close in winter."],["La conduite hors piste est interdite et lourdement sanctionnée.","Les routes F des hautes terres sont réservées aux 4x4 et fermées l'hiver."],["Offroad-Fahren ist verboten und wird hoch bestraft.","Hochland-F-Straßen nur für Allrad und im Winter gesperrt."]),
+ q(["احترم إغلاق المواقع الطبيعية والتحذيرات، فالمخالفة قد تعرضك لغرامة."],["Respect closures and warnings at natural sites; violations can be fined."],["Respectez fermetures et avertissements sur les sites naturels ; amendes possibles."],["Sperrungen und Warnungen an Naturstätten beachten; Verstöße werden bestraft."]),
+ q(["تابع حالة الطرق والطقس على safetravel.is قبل كل رحلة.","لا تقترب من الأمواج في شاطئ رينيسفارا؛ الأمواج المفاجئة قاتلة."],["Check road and weather status at safetravel.is before every trip.","Stay back from the waves at Reynisfjara beach; sneaker waves kill."],["Consultez routes et météo sur safetravel.is avant chaque trajet.","Restez loin des vagues à Reynisfjara ; les vagues traîtresses tuent."],["Vor jeder Fahrt Straßen und Wetter auf safetravel.is prüfen.","Am Strand Reynisfjara Abstand zu den Wellen halten; Schwallwellen sind tödlich."]),
+ E112,
+ q(["آيسلندا ليست في الاتحاد الأوروبي: صرّح عن النقد الذي يتجاوز ما يعادل 10,000 يورو."],["Iceland is not in the EU: declare cash above the equivalent of €10,000."],["L'Islande n'est pas dans l'UE : déclarez les espèces au-delà de 10 000 €."],["Island ist nicht in der EU: Bargeld über umgerechnet 10.000 € anmelden."])),
+SCHC("pl","PL",q("بولندا","Poland","Pologne","Polen"),"PLN zł","right",{u:"https://www.gov.pl/web/udsc-en",t:"gov.pl"},
+ q(["الأضواء مشغلة دائماً؛ 50 في المدن، 90 خارجها، 140 على الطرق السريعة."],["Headlights always on; 50 in towns, 90 outside, 140 on motorways."],["Feux toujours allumés ; 50 en ville, 90 hors agglomération, 140 sur autoroute."],["Licht immer an; 50 innerorts, 90 außerorts, 140 auf Autobahnen."]),
+ q(["شرب الكحول في الأماكن العامة ممنوع."],["Drinking alcohol in public places is banned."],["Boire de l'alcool dans l'espace public est interdit."],["Alkohol in der Öffentlichkeit ist verboten."]),
+ q(["تأكد من سعر الصرف في مكاتب الصرافة (Kantor) قبل التسليم، فبعضها في المناطق السياحية سيئ جداً."],["Check the rate at exchange offices (Kantor) before handing over money; some in tourist areas are very poor."],["Vérifiez le taux dans les bureaux de change (Kantor) avant de payer ; certains sont très mauvais."],["Kurs in Wechselstuben (Kantor) vorher prüfen; manche in Touristengegenden sind sehr schlecht."]),
+ E112),
+SCHC("cz","CZ",q("التشيك","Czechia","Tchéquie","Tschechien"),"CZK Kč","right",{u:"https://www.mvcr.cz/mvcren/",t:"mvcr.cz"},
+ q(["الطرق السريعة تحتاج ملصقاً إلكترونياً من edalnice.cz فقط.","الكحول للسائق ممنوع تماماً (صفر)."],["Motorways need an e-vignette, only from edalnice.cz.","Zero alcohol for drivers."],["Les autoroutes exigent une e-vignette, uniquement sur edalnice.cz.","Zéro alcool au volant."],["Autobahnen brauchen eine E-Vignette, nur über edalnice.cz.","Null Promille für Fahrer."]),
+ q(["يجب أن تحمل جوازك دائماً."],["You must always carry your passport."],["Vous devez toujours avoir votre passeport."],["Der Pass muss immer mitgeführt werden."]),
+ q(["مكاتب الصرافة في براغ قد تعطي أسعاراً سيئة جداً، ولا تصرف أبداً في الشارع."],["Prague exchange offices can give very poor rates; never change money on the street."],["Les bureaux de change de Prague peuvent pratiquer des taux très mauvais ; ne changez jamais dans la rue."],["Prager Wechselstuben haben teils sehr schlechte Kurse; nie auf der Straße tauschen."]),
+ [...E112,[q("شرطة","Police","Police","Polizei"),"158"]]),
+SCHC("sk","SK",q("سلوفاكيا","Slovakia","Slovaquie","Slowakei"),"EUR €","right",{u:"https://www.minv.sk",t:"minv.sk"},
+ q(["الطرق السريعة تحتاج ملصقاً إلكترونياً من eznamka.sk.","الكحول للسائق ممنوع تماماً."],["Motorways need an e-vignette from eznamka.sk.","Zero alcohol for drivers."],["Les autoroutes exigent une e-vignette sur eznamka.sk.","Zéro alcool au volant."],["Autobahnen brauchen eine E-Vignette über eznamka.sk.","Null Promille für Fahrer."]),
+ q(["يجب أن تحمل جوازك دائماً."],["You must always carry your passport."],["Vous devez toujours avoir votre passeport."],["Der Pass muss immer mitgeführt werden."]),
+ q(["استخدم تطبيقات النقل بدل سيارات الأجرة غير المرخصة في براتيسلافا."],["Use ride apps rather than unlicensed taxis in Bratislava."],["Utilisez les applis de VTC plutôt que des taxis non agréés à Bratislava."],["In Bratislava Fahrdienst-Apps statt nicht lizenzierter Taxis nutzen."]),
+ [...E112,[q("شرطة","Police","Police","Polizei"),"158"]]),
+SCHC("hu","HU",q("المجر","Hungary","Hongrie","Ungarn"),"HUF Ft","right",{u:"https://oif.gov.hu",t:"oif.gov.hu"},
+ q(["الطرق السريعة تحتاج ملصقاً إلكترونياً (e-matrica).","الكحول للسائق ممنوع تماماً."],["Motorways need an e-vignette (e-matrica).","Zero alcohol for drivers."],["Les autoroutes exigent une e-vignette (e-matrica).","Zéro alcool au volant."],["Autobahnen brauchen eine E-Vignette (e-matrica).","Null Promille für Fahrer."]),
+ q(["يجب أن تحمل جوازك دائماً."],["You must always carry your passport."],["Vous devez toujours avoir votre passeport."],["Der Pass muss immer mitgeführt werden."]),
+ q(["في بودابست: نساء يدعونك إلى بار أو مطعم، ثم فاتورة ضخمة مع حراس؛ لا تقبل الدعوات من الغرباء."],["In Budapest, women invite you to a bar or restaurant, then a huge bill with bouncers; don't accept invites from strangers."],["À Budapest, des femmes vous invitent dans un bar, puis note énorme et videurs ; refusez les invitations d'inconnus."],["In Budapest laden Frauen in Bars ein, dann riesige Rechnung mit Türstehern; Einladungen Fremder ablehnen."]),
+ [...E112,[q("شرطة","Police","Police","Polizei"),"107"]]),
+SCHC("si","SI",q("سلوفينيا","Slovenia","Slovénie","Slowenien"),"EUR €","right",{u:"https://www.gov.si/en/",t:"gov.si"},
+ q(["الطرق السريعة تحتاج ملصقاً إلكترونياً (e-vinjeta)، وغرامة عدم وجوده كبيرة.","الأضواء مشغلة دائماً."],["Motorways need an e-vignette (e-vinjeta); the fine without one is high.","Headlights always on."],["Les autoroutes exigent une e-vignette (e-vinjeta) ; l'amende est élevée.","Feux toujours allumés."],["Autobahnen brauchen eine E-Vignette (e-vinjeta); hohe Strafe ohne.","Licht immer an."]),
+ q(["احمل جوازك أو هويتك."],["Carry your passport or ID."],["Ayez votre passeport ou pièce d'identité."],["Pass oder Ausweis mitführen."]),
+ q(["الطرق الجبلية في جبال الألب تحتاج حذراً في الشتاء، وإطارات الشتاء إلزامية من نوفمبر إلى مارس."],["Alpine roads need care in winter; winter tyres are mandatory Nov–Mar."],["Prudence sur les routes alpines en hiver ; pneus hiver obligatoires de nov. à mars."],["Vorsicht auf Alpenstraßen im Winter; Winterreifen Nov.–März Pflicht."]),
+ [...E112,[q("شرطة","Police","Police","Polizei"),"113"]]),
+SCHC("hr","HR",q("كرواتيا","Croatia","Croatie","Kroatien"),"EUR €","right",{u:"https://mup.gov.hr",t:"mup.gov.hr"},
+ q(["رسوم الطرق السريعة تُدفع عند البوابات.","الأضواء مشغلة في الشتاء."],["Motorway tolls are paid at booths.","Headlights on in winter."],["Les péages se paient aux barrières.","Feux allumés en hiver."],["Autobahnmaut wird an Mautstellen bezahlt.","Licht im Winter an."]),
+ q(["التجول بملابس السباحة أو بدون قميص في وسط سبليت ودوبروفنيك قد يعرضك لغرامة."],["Walking in swimwear or shirtless in central Split and Dubrovnik can be fined."],["Se promener en maillot ou torse nu dans le centre de Split et Dubrovnik peut être verbalisé."],["In Badekleidung oder oben ohne in den Zentren von Split und Dubrovnik drohen Bußgelder."]),
+ q(["بعض مطاعم المناطق السياحية تضيف رسوماً غير معلنة؛ اطلب القائمة بالأسعار قبل الطلب."],["Some tourist-area restaurants add hidden charges; ask for the priced menu before ordering."],["Certains restaurants touristiques ajoutent des frais cachés ; demandez la carte avec prix."],["Manche Touristenlokale schlagen versteckte Gebühren auf; Karte mit Preisen verlangen."]),
+ [...E112,[q("شرطة","Police","Police","Polizei"),"192"]]),
+SCHC("ee","EE",q("إستونيا","Estonia","Estonie","Estland"),"EUR €","right",{u:"https://www.politsei.ee/en",t:"politsei.ee"},
+ q(["الأضواء مشغلة دائماً، وإطارات الشتاء إلزامية من ديسمبر إلى فبراير."],["Headlights always on; winter tyres mandatory Dec–Feb."],["Feux toujours allumés ; pneus hiver obligatoires de déc. à févr."],["Licht immer an; Winterreifen Dez.–Feb. Pflicht."]),
+ q(["عند المشي ليلاً في مكان غير مضاء يجب ارتداء عاكس ضوء، وإلا تُغرّم."],["When walking at night in unlit areas you must wear a reflector, or be fined."],["La nuit, dans les zones non éclairées, le port d'un réflecteur est obligatoire."],["Nachts in unbeleuchteten Bereichen ist ein Reflektor Pflicht."]),
+ q(["استخدم تطبيقات النقل بدل سيارات الأجرة بلا عداد في تالين القديمة."],["Use ride apps rather than unmetered taxis in Tallinn's Old Town."],["Utilisez les applis plutôt que des taxis sans compteur dans la vieille ville de Tallinn."],["In Tallinns Altstadt Apps statt Taxis ohne Taxameter nutzen."]),
+ E112),
+SCHC("lv","LV",q("لاتفيا","Latvia","Lettonie","Lettland"),"EUR €","right",{u:"https://www.pmlp.gov.lv/en",t:"pmlp.gov.lv"},
+ q(["الأضواء مشغلة دائماً، وإطارات الشتاء إلزامية من ديسمبر إلى فبراير."],["Headlights always on; winter tyres mandatory Dec–Feb."],["Feux toujours allumés ; pneus hiver obligatoires de déc. à févr."],["Licht immer an; Winterreifen Dez.–Feb. Pflicht."]),
+ q(["شرب الكحول في الأماكن العامة ممنوع."],["Drinking alcohol in public places is banned."],["Boire de l'alcool dans l'espace public est interdit."],["Alkohol in der Öffentlichkeit ist verboten."]),
+ q(["احذر بارات ريغا القديمة التي تبالغ في الفواتير بعد دعوة من غرباء."],["Beware Old Riga bars that inflate bills after strangers invite you in."],["Méfiez-vous des bars du vieux Riga qui gonflent l'addition après une invitation d'inconnus."],["Vorsicht vor Bars in der Rigaer Altstadt, die nach Einladungen Fremder überhöhte Rechnungen stellen."]),
+ E112),
+SCHC("lt","LT",q("ليتوانيا","Lithuania","Lituanie","Litauen"),"EUR €","right",{u:"https://migracija.lrv.lt/en/",t:"migracija.lrv.lt"},
+ q(["الأضواء مشغلة دائماً، وإطارات الشتاء إلزامية من نوفمبر إلى مارس."],["Headlights always on; winter tyres mandatory Nov–Mar."],["Feux toujours allumés ; pneus hiver obligatoires de nov. à mars."],["Licht immer an; Winterreifen Nov.–März Pflicht."]),
+ q(["شرب الكحول في الأماكن العامة ممنوع."],["Drinking alcohol in public places is banned."],["Boire de l'alcool dans l'espace public est interdit."],["Alkohol in der Öffentlichkeit ist verboten."]),
+ q(["استخدم تطبيقات النقل بدل سيارات الأجرة من الشارع."],["Use ride apps rather than street taxis."],["Utilisez les applis plutôt que les taxis hélés dans la rue."],["Fahrdienst-Apps statt Straßentaxis nutzen."]),
+ E112),
+SCHC("mt","MT",q("مالطا","Malta","Malte","Malta"),"EUR €","left",{u:"https://identita.gov.mt",t:"identita.gov.mt"},
+ q(["القيادة على اليسار.","الطرق ضيقة ومزدحمة؛ الحافلات والعبّارات أسهل."],["Drive on the left.","Roads are narrow and busy; buses and ferries are easier."],["Conduite à gauche.","Routes étroites et encombrées ; bus et ferries plus simples."],["Linksverkehr.","Enge, volle Straßen; Busse und Fähren sind einfacher."]),
+ q(["التجول بملابس السباحة بعيداً عن الشاطئ غير مقبول في المدن والكنائس."],["Swimwear away from the beach isn't acceptable in towns and churches."],["Le maillot de bain loin de la plage n'est pas accepté en ville ni dans les églises."],["Badekleidung abseits des Strandes ist in Städten und Kirchen unangebracht."]),
+ q(["انتبه لقناديل البحر والتيارات في بعض الشواطئ، واتبع رايات التحذير."],["Watch for jellyfish and currents at some beaches; follow warning flags."],["Attention aux méduses et aux courants ; suivez les drapeaux d'avertissement."],["Auf Quallen und Strömungen achten; Warnflaggen befolgen."]),
+ E112),
+SCHC("ro","RO",q("رومانيا","Romania","Roumanie","Rumänien"),"RON lei","right",{u:"https://igi.mai.gov.ro/en/",t:"igi.mai.gov.ro"},
+ q(["تحتاج ملصقاً إلكترونياً (rovinieta) لكل الطرق الوطنية خارج المدن.","الكحول للسائق ممنوع تماماً."],["You need an e-vignette (rovinieta) for all national roads outside towns.","Zero alcohol for drivers."],["Une e-vignette (rovinieta) est obligatoire sur toutes les routes nationales hors agglomération.","Zéro alcool au volant."],["Für alle Nationalstraßen außerorts ist eine E-Vignette (rovinieta) nötig.","Null Promille für Fahrer."]),
+ q(["احمل جوازك أو هويتك."],["Carry your passport or ID."],["Ayez votre passeport ou pièce d'identité."],["Pass oder Ausweis mitführen."]),
+ q(["في مطار بوخارست اطلب التاكسي من الأجهزة الرسمية في الصالة أو التطبيقات فقط."],["At Bucharest airport, book taxis only from the official kiosks in the hall or via apps."],["À l'aéroport de Bucarest, réservez le taxi aux bornes officielles ou via les applis."],["Am Flughafen Bukarest Taxis nur an den offiziellen Automaten oder per App buchen."]),
+ E112),
+SCHC("bg","BG",q("بلغاريا","Bulgaria","Bulgarie","Bulgarien"),"EUR €","right",{u:"https://www.mvr.bg/en",t:"mvr.bg"},
+ q(["الطرق تحتاج ملصقاً إلكترونياً (e-vignette) من bgtoll.bg."],["Roads need an e-vignette from bgtoll.bg."],["Les routes exigent une e-vignette sur bgtoll.bg."],["Straßen brauchen eine E-Vignette über bgtoll.bg."]),
+ q(["هزّ الرأس للأعلى والأسفل قد يعني «لا»، والهز يميناً ويساراً قد يعني «نعم»."],["Nodding can mean 'no' and shaking your head can mean 'yes'."],["Hocher la tête peut signifier « non » et la secouer « oui »."],["Nicken kann „nein“ und Kopfschütteln „ja“ bedeuten."]),
+ q(["احذر سيارات الأجرة غير المرخصة في صوفيا والمنتجعات؛ تحقق من السعر المكتوب على الزجاج."],["Beware unlicensed taxis in Sofia and resorts; check the price shown on the window."],["Méfiez-vous des taxis non agréés à Sofia et dans les stations ; vérifiez le tarif affiché."],["Vorsicht vor nicht lizenzierten Taxis in Sofia und Ferienorten; Preis an der Scheibe prüfen."]),
+ E112)
+,
+{id:"ie",code:"IE",n:q("إيرلندا","Ireland","Irlande","Irland"),cur:"EUR €",side:"left",
+ entry:q(["إيرلندا ليست في شنغن، وفيزا شنغن لا تكفي لدخولها.","مواطنو بريطانيا يدخلون بحرية، ومواطنو أمريكا وكندا والاتحاد الأوروبي والإمارات ودول عديدة في أمريكا اللاتينية بدون فيزا.","أغلب الجنسيات العربية والآسيوية الأخرى تحتاج فيزا إيرلندية، ومن يدخل بريطانيا أولاً بفيزا زيارة بريطانية قد يُعفى منها لزيارة قصيرة."],
+  ["Ireland is not in Schengen; a Schengen visa is not enough to enter.","UK citizens move freely; US, Canadian, EU, UAE and many Latin American citizens need no visa.","Most other Arab and Asian nationalities need an Irish visa; those who first enter the UK on a UK visitor visa may be exempt for a short visit."],
+  ["L'Irlande n'est pas dans Schengen ; un visa Schengen ne suffit pas.","Les Britanniques circulent librement ; Américains, Canadiens, Européens, Émiratis et de nombreux Latino-Américains n'ont pas besoin de visa.","La plupart des autres nationalités arabes et asiatiques ont besoin d'un visa irlandais ; une entrée préalable au Royaume-Uni avec un visa visiteur britannique peut en dispenser pour un court séjour."],
+  ["Irland ist nicht im Schengen-Raum; ein Schengen-Visum reicht nicht.","Briten reisen frei; US-Bürger, Kanadier, EU-Bürger, Emiratis und viele Lateinamerikaner brauchen kein Visum.","Die meisten anderen arabischen und asiatischen Nationalitäten brauchen ein irisches Visum; wer zuerst mit britischem Besuchervisum ins UK einreist, kann für kurze Besuche befreit sein."]),
+ entrySrc:{u:"https://www.irishimmigration.ie",t:"irishimmigration.ie"},
+ res:q(["للإقامة أكثر من 90 يوماً سجّل لدى دائرة الهجرة واحصل على بطاقة IRP."],["For stays over 90 days, register with immigration and get an IRP card."],["Au-delà de 90 jours, enregistrez-vous et obtenez une carte IRP."],["Bei über 90 Tagen bei der Einwanderungsbehörde registrieren und IRP-Karte holen."]),
+ resSrc:{u:"https://www.irishimmigration.ie",t:"irishimmigration.ie"},money:one(EUCASH),
+ drive:q(["القيادة على اليسار.","السرعات بالكيلومتر: 50 في المدن، 80 على الطرق الريفية، 100 على الطرق الوطنية، 120 على الطرق السريعة."],["Drive on the left.","Limits in km/h: 50 in towns, 80 on rural roads, 100 on national roads, 120 on motorways."],["Conduite à gauche.","Limites en km/h : 50 en ville, 80 sur routes rurales, 100 sur routes nationales, 120 sur autoroute."],["Linksverkehr.","Tempolimits in km/h: 50 innerorts, 80 Landstraßen, 100 Nationalstraßen, 120 Autobahnen."]),
+ laws:q(["التدخين ممنوع في الحانات والأماكن المغلقة."],["Smoking is banned in pubs and enclosed places."],["Il est interdit de fumer dans les pubs et lieux fermés."],["Rauchen ist in Pubs und geschlossenen Räumen verboten."]),
+ warn:q(["إذا وصلت عبر بريطانيا فاحتفظ بإثبات دخولك إليها، فقد يُطلب عند الحدود الإيرلندية."],["If arriving via the UK, keep proof of your UK entry; it may be checked at the Irish border."],["Si vous arrivez par le Royaume-Uni, gardez la preuve de votre entrée ; elle peut être contrôlée."],["Bei Anreise über das UK den Nachweis der UK-Einreise aufbewahren; er kann geprüft werden."]),
+ sos:[[q("طوارئ","Emergency","Urgences","Notruf"),"112"],[q("طوارئ (محلي)","Emergency (local)","Urgences (local)","Notruf (lokal)"),"999"]]},
+
+{id:"cy",code:"CY",n:q("قبرص","Cyprus","Chypre","Zypern"),cur:"EUR €",side:"left",
+ entry:q(["قبرص في الاتحاد الأوروبي لكنها ليست في شنغن، وأيامك فيها تُحسب منفصلة.","مواطنو بريطانيا وأمريكا وكندا والإمارات يدخلون بدون فيزا حتى 90 يوماً.","حاملو فيزا شنغن متعددة الدخول سارية يدخلون غالباً بدون فيزا قبرصية (ما عدا الأتراك والأذربيجانيين)، والباقون يطلبون فيزا من القنصلية."],
+  ["Cyprus is in the EU but not in Schengen; days there are counted separately.","UK, US, Canadian and UAE citizens enter visa-free for up to 90 days.","Holders of a valid multiple-entry Schengen visa can usually enter without a Cypriot visa (except Turkish and Azerbaijani citizens); others apply at a consulate."],
+  ["Chypre est dans l'UE mais pas dans Schengen ; les jours y sont comptés à part.","Britanniques, Américains, Canadiens et Émiratis entrent sans visa jusqu'à 90 jours.","Les titulaires d'un visa Schengen à entrées multiples valide entrent généralement sans visa chypriote (sauf Turcs et Azerbaïdjanais) ; les autres passent par le consulat."],
+  ["Zypern ist in der EU, aber nicht im Schengen-Raum; Tage dort zählen separat.","Briten, US-Bürger, Kanadier und Emiratis reisen bis zu 90 Tage visumfrei ein.","Inhaber eines gültigen Schengen-Mehrfachvisums reisen meist ohne zyprisches Visum ein (außer Türken und Aserbaidschaner); andere beantragen es beim Konsulat."]),
+ entrySrc:{u:"https://www.mfa.gov.cy",t:"mfa.gov.cy"},
+ res:q(["الإقامة عبر دائرة السجل المدني والهجرة."],["Residence goes through the Civil Registry and Migration Department."],["Le séjour relève du Département de l'état civil et des migrations."],["Aufenthalt über die Abteilung für Personenstand und Migration."]),
+ resSrc:{u:"https://www.moi.gov.cy/moi/crmd/crmd.nsf",t:"moi.gov.cy"},money:one(EUCASH),
+ drive:q(["القيادة على اليسار، والدوارات كثيرة.","50 كم/س في المدن، 80 خارجها، 100 على الطرق السريعة."],["Drive on the left; there are many roundabouts.","50 km/h in towns, 80 outside, 100 on motorways."],["Conduite à gauche ; nombreux ronds-points.","50 km/h en ville, 80 hors agglomération, 100 sur autoroute."],["Linksverkehr; viele Kreisverkehre.","50 km/h innerorts, 80 außerorts, 100 auf Autobahnen."]),
+ laws:q(["الدخول عبر مطارات أو موانئ الشمال (مثل مطار إركان) يعتبره القانون القبرصي دخولاً غير شرعي.","العبور بين الجنوب والشمال مسموح فقط من نقاط العبور الرسمية."],["Entering through northern airports or ports (such as Ercan) is treated as illegal entry by Cypriot law.","Crossing between south and north is allowed only at official crossing points."],["Entrer par les aéroports ou ports du nord (comme Ercan) est considéré comme une entrée illégale.","Le passage nord-sud n'est autorisé qu'aux points officiels."],["Einreise über Flughäfen oder Häfen im Norden (z. B. Ercan) gilt als illegal.","Wechsel zwischen Süd und Nord nur an offiziellen Übergängen."]),
+ warn:q(["احذر النوادي الليلية في بعض المناطق السياحية التي تبالغ في الأسعار؛ اسأل عن السعر مسبقاً."],["Beware some nightclubs in tourist areas that inflate prices; ask the price first."],["Méfiez-vous de certaines boîtes de nuit touristiques aux prix gonflés ; demandez le prix avant."],["Vorsicht vor Nachtclubs in Touristengebieten mit überhöhten Preisen; vorher nach dem Preis fragen."]),
+ sos:E112},
+
+{id:"ba",code:"BA",n:q("البوسنة والهرسك","Bosnia and Herzegovina","Bosnie-Herzégovine","Bosnien und Herzegowina"),cur:"BAM KM",side:"right",
+ entry:q(["مواطنو بريطانيا وأمريكا والاتحاد الأوروبي يدخلون بدون فيزا حتى 90 يوماً خلال 180.","لبعض دول الخليج إعفاء دائم، ولبعضها إعفاء موسمي في الصيف (يونيو إلى سبتمبر)؛ تحقق من جنسيتك.","حاملو فيزا شنغن أو أمريكية أو بريطانية متعددة الدخول سارية، أو إقامة فيها، يدخلون بدون فيزا حتى 30 يوماً."],
+  ["UK, US and EU citizens enter visa-free for up to 90 days in 180.","Some Gulf states have a permanent exemption, others a summer one (June–September); check your nationality.","Holders of a valid multiple-entry Schengen, US or UK visa, or residence there, enter visa-free for up to 30 days."],
+  ["Britanniques, Américains et Européens entrent sans visa jusqu'à 90 jours sur 180.","Certains pays du Golfe bénéficient d'une exemption permanente, d'autres d'une exemption estivale (juin–septembre) ; vérifiez la vôtre.","Les titulaires d'un visa Schengen, américain ou britannique à entrées multiples valide, ou d'une résidence, entrent sans visa jusqu'à 30 jours."],
+  ["Briten, US- und EU-Bürger reisen bis zu 90 Tage in 180 visumfrei ein.","Manche Golfstaaten haben eine dauerhafte, andere eine Sommerbefreiung (Juni–September); Nationalität prüfen.","Inhaber eines gültigen Schengen-, US- oder UK-Mehrfachvisums oder Aufenthalts reisen bis zu 30 Tage visumfrei ein."]),
+ entrySrc:{u:"https://www.mvp.gov.ba",t:"mvp.gov.ba"},
+ res:q(["سجّل إقامتك لدى الشرطة خلال 24 ساعة (الفندق يقوم بذلك)."],["Register your stay with the police within 24 hours (hotels do this)."],["Déclarez votre séjour à la police sous 24 heures (l'hôtel s'en charge)."],["Aufenthalt binnen 24 Stunden bei der Polizei melden (Hotels erledigen das)."]),
+ resSrc:{u:"https://sps.gov.ba",t:"sps.gov.ba"},
+ money:q(["صرّح عن النقد الذي يتجاوز 10,000 يورو."],["Declare cash above €10,000."],["Déclarez les espèces au-delà de 10 000 €."],["Bargeld über 10.000 € anmelden."]),
+ drive:q(["الطرق الجبلية ضيقة ومتعرجة، والأضواء مشغلة دائماً."],["Mountain roads are narrow and winding; headlights always on."],["Routes de montagne étroites et sinueuses ; feux toujours allumés."],["Bergstraßen sind eng und kurvig; Licht immer an."]),
+ laws:q(["تصوير المنشآت العسكرية ممنوع."],["Photographing military sites is forbidden."],["Photographier les sites militaires est interdit."],["Militäranlagen dürfen nicht fotografiert werden."]),
+ warn:q(["لا تبتعد عن الطرق والمسارات المعبدة في الريف؛ ما زالت هناك ألغام من الحرب.","اتفق على سعر التاكسي مسبقاً أو استخدم التاكسي ذا العداد."],["Don't stray from roads and marked paths in the countryside; wartime landmines remain.","Agree taxi fares in advance or use metered taxis."],["Ne quittez pas les routes et sentiers balisés à la campagne ; des mines de la guerre subsistent.","Fixez le prix du taxi à l'avance ou prenez un taxi avec compteur."],["Auf dem Land nicht von Straßen und markierten Wegen abweichen; es gibt noch Landminen.","Taxipreis vorher vereinbaren oder Taxameter-Taxi nehmen."]),
+ sos:[...E112,[q("شرطة","Police","Police","Polizei"),"122"],[q("إسعاف","Ambulance","SAMU","Rettung"),"124"]]},
+
+{id:"al",code:"AL",n:q("ألبانيا","Albania","Albanie","Albanien"),cur:"ALL Lek",side:"right",
+ entry:q(["مواطنو بريطانيا وأمريكا والاتحاد الأوروبي يدخلون بدون فيزا حتى 90 يوماً.","حاملو فيزا شنغن أو أمريكية أو بريطانية سارية مستخدمة، أو إقامة فيها، يدخلون بدون فيزا.","كثير من مواطني دول الخليج يدخلون بدون فيزا؛ تحقق من المدة لجنسيتك."],
+  ["UK, US and EU citizens enter visa-free for up to 90 days.","Holders of a valid, previously used Schengen, US or UK visa, or residence there, enter visa-free.","Many Gulf citizens enter visa-free; check the length for your nationality."],
+  ["Britanniques, Américains et Européens entrent sans visa jusqu'à 90 jours.","Les titulaires d'un visa Schengen, américain ou britannique valide et déjà utilisé, ou d'une résidence, entrent sans visa.","De nombreux citoyens du Golfe entrent sans visa ; vérifiez la durée pour votre nationalité."],
+  ["Briten, US- und EU-Bürger reisen bis zu 90 Tage visumfrei ein.","Inhaber eines gültigen, bereits genutzten Schengen-, US- oder UK-Visums oder Aufenthalts reisen visumfrei ein.","Viele Golfbürger reisen visumfrei ein; Dauer für die eigene Nationalität prüfen."]),
+ entrySrc:{u:"https://punetejashtme.gov.al/en/",t:"punetejashtme.gov.al"},
+ res:q(["الإقامة أكثر من 90 يوماً تُطلب عبر بوابة e-Albania."],["Stays over 90 days are applied for via the e-Albania portal."],["Au-delà de 90 jours, demande via le portail e-Albania."],["Aufenthalte über 90 Tage über das Portal e-Albania beantragen."]),
+ resSrc:{u:"https://e-albania.al",t:"e-albania.al"},
+ money:q(["صرّح عن النقد الذي يتجاوز ما يعادل 10,000 يورو."],["Declare cash above the equivalent of €10,000."],["Déclarez les espèces au-delà de l'équivalent de 10 000 €."],["Bargeld über umgerechnet 10.000 € anmelden."]),
+ drive:q(["القيادة قد تكون عشوائية؛ احذر الحيوانات والحفر على الطرق الريفية."],["Driving can be erratic; watch for animals and potholes on rural roads."],["La conduite peut être désordonnée ; attention aux animaux et nids-de-poule."],["Fahrstil kann chaotisch sein; auf Tiere und Schlaglöcher achten."]),
+ laws:q(["احمل جوازك دائماً."],["Always carry your passport."],["Ayez toujours votre passeport."],["Pass immer mitführen."]),
+ warn:q(["اتفق على سعر التاكسي مسبقاً، وتأكد من الفاتورة في مطاعم المناطق السياحية."],["Agree taxi fares in advance and check bills at tourist-area restaurants."],["Fixez le prix du taxi à l'avance et vérifiez l'addition dans les restaurants touristiques."],["Taxipreise vorher vereinbaren und Rechnungen in Touristenlokalen prüfen."]),
+ sos:[...E112,[q("شرطة","Police","Police","Polizei"),"129"],[q("إسعاف","Ambulance","SAMU","Rettung"),"127"]]},
+
+{id:"rs",code:"RS",n:q("صربيا","Serbia","Serbie","Serbien"),cur:"RSD",side:"right",
+ entry:q(["مواطنو بريطانيا وأمريكا والاتحاد الأوروبي والإمارات وقطر والصين وروسيا وتركيا يدخلون بدون فيزا حتى 90 يوماً.","حاملو فيزا أو إقامة سارية من شنغن أو أمريكا أو بريطانيا أو إيرلندا أو قبرص يدخلون بدون فيزا حتى 90 يوماً خلال 180.","جنسيات أخرى تطلب فيزا إلكترونية أو من السفارة."],
+  ["UK, US, EU, UAE, Qatari, Chinese, Russian and Turkish citizens enter visa-free for up to 90 days.","Holders of a valid visa or residence from Schengen, the US, UK, Ireland or Cyprus enter visa-free for up to 90 days in 180.","Other nationalities apply for an e-Visa or embassy visa."],
+  ["Britanniques, Américains, Européens, Émiratis, Qataris, Chinois, Russes et Turcs entrent sans visa jusqu'à 90 jours.","Les titulaires d'un visa ou d'une résidence valide (Schengen, États-Unis, Royaume-Uni, Irlande, Chypre) entrent sans visa jusqu'à 90 jours sur 180.","Les autres demandent un e-Visa ou un visa d'ambassade."],
+  ["Briten, US-Bürger, EU-Bürger, Emiratis, Katarer, Chinesen, Russen und Türken reisen bis zu 90 Tage visumfrei ein.","Inhaber eines gültigen Visums oder Aufenthalts von Schengen, USA, UK, Irland oder Zypern reisen bis zu 90 Tage in 180 visumfrei ein.","Andere beantragen ein E-Visum oder Botschaftsvisum."]),
+ entrySrc:{u:"https://www.mfa.gov.rs/en",t:"mfa.gov.rs"},
+ res:q(["سجّل إقامتك لدى الشرطة خلال 24 ساعة (الفندق يقوم بذلك)."],["Register your stay with the police within 24 hours (hotels do this)."],["Déclarez votre séjour à la police sous 24 heures (l'hôtel s'en charge)."],["Aufenthalt binnen 24 Stunden bei der Polizei melden (Hotels erledigen das)."]),
+ resSrc:{u:"https://www.mup.gov.rs",t:"mup.gov.rs"},
+ money:q(["صرّح عن النقد الذي يتجاوز 10,000 يورو."],["Declare cash above €10,000."],["Déclarez les espèces au-delà de 10 000 €."],["Bargeld über 10.000 € anmelden."]),
+ drive:q(["الأضواء مشغلة دائماً، ورسوم الطرق السريعة عند البوابات."],["Headlights always on; motorway tolls at booths."],["Feux toujours allumés ; péages aux barrières."],["Licht immer an; Autobahnmaut an Mautstellen."]),
+ laws:q(["إذا دخلت كوسوفو من غير صربيا فقد تُرفض عند العبور منها إلى صربيا."],["If you entered Kosovo from outside Serbia, you may be refused when crossing from Kosovo into Serbia."],["Si vous êtes entré au Kosovo hors de Serbie, l'entrée en Serbie depuis le Kosovo peut être refusée."],["Wer nicht über Serbien in den Kosovo eingereist ist, kann bei der Weiterreise nach Serbien abgewiesen werden."]),
+ warn:q(["استخدم التاكسي المرخص أو التطبيقات في بلغراد، خاصة من المطار."],["Use licensed taxis or apps in Belgrade, especially from the airport."],["Utilisez taxis agréés ou applis à Belgrade, surtout depuis l'aéroport."],["In Belgrad lizenzierte Taxis oder Apps nutzen, besonders vom Flughafen."]),
+ sos:[...E112,[q("شرطة","Police","Police","Polizei"),"192"],[q("إسعاف","Ambulance","SAMU","Rettung"),"194"]]},
+
+{id:"me",code:"ME",n:q("الجبل الأسود","Montenegro","Monténégro","Montenegro"),cur:"EUR €",side:"right",
+ entry:q(["مواطنو بريطانيا وأمريكا والاتحاد الأوروبي يدخلون بدون فيزا حتى 90 يوماً.","حاملو فيزا شنغن أو أمريكية أو بريطانية سارية يدخلون بدون فيزا حتى 30 يوماً.","توجد فيزا إلكترونية لبعض الجنسيات."],
+  ["UK, US and EU citizens enter visa-free for up to 90 days.","Holders of a valid Schengen, US or UK visa enter visa-free for up to 30 days.","An e-Visa exists for some nationalities."],
+  ["Britanniques, Américains et Européens entrent sans visa jusqu'à 90 jours.","Les titulaires d'un visa Schengen, américain ou britannique valide entrent sans visa jusqu'à 30 jours.","Un e-Visa existe pour certaines nationalités."],
+  ["Briten, US- und EU-Bürger reisen bis zu 90 Tage visumfrei ein.","Inhaber eines gültigen Schengen-, US- oder UK-Visums reisen bis zu 30 Tage visumfrei ein.","Für manche Nationalitäten gibt es ein E-Visum."]),
+ entrySrc:{u:"https://www.gov.me/en",t:"gov.me"},
+ res:q(["سجّل إقامتك لدى الشرطة خلال 24 ساعة (الفندق يقوم بذلك)، وتُدفع ضريبة سياحية صغيرة."],["Register your stay within 24 hours (hotels do this); a small tourist tax applies."],["Déclarez votre séjour sous 24 heures (l'hôtel s'en charge) ; petite taxe de séjour."],["Aufenthalt binnen 24 Stunden melden (Hotels erledigen das); kleine Kurtaxe."]),
+ resSrc:{u:"https://www.gov.me/en",t:"gov.me"},
+ money:q(["صرّح عن النقد الذي يتجاوز 10,000 يورو."],["Declare cash above €10,000."],["Déclarez les espèces au-delà de 10 000 €."],["Bargeld über 10.000 € anmelden."]),
+ drive:q(["الطرق الساحلية والجبلية متعرجة جداً، والأضواء مشغلة دائماً."],["Coastal and mountain roads are very winding; headlights always on."],["Routes côtières et de montagne très sinueuses ; feux toujours allumés."],["Küsten- und Bergstraßen sind sehr kurvig; Licht immer an."]),
+ laws:q(["التجول بملابس السباحة في وسط المدن الساحلية (مثل بودفا) قد يعرضك لغرامة."],["Wearing swimwear in coastal town centres (e.g. Budva) can be fined."],["Le maillot de bain dans le centre des villes côtières (Budva) peut être verbalisé."],["Badekleidung in Küstenorten (z. B. Budva) kann Bußgeld kosten."]),
+ warn:q(["اتفق على سعر التاكسي مسبقاً في المدن الساحلية."],["Agree taxi fares in advance in coastal towns."],["Fixez le prix du taxi à l'avance dans les villes côtières."],["In Küstenorten Taxipreise vorher vereinbaren."]),
+ sos:[...E112,[q("شرطة","Police","Police","Polizei"),"122"],[q("إسعاف","Ambulance","SAMU","Rettung"),"124"]]},
+
+{id:"mk",code:"MK",n:q("مقدونيا الشمالية","North Macedonia","Macédoine du Nord","Nordmazedonien"),cur:"MKD",side:"right",
+ entry:q(["مواطنو بريطانيا وأمريكا والاتحاد الأوروبي يدخلون بدون فيزا حتى 90 يوماً.","حاملو فيزا شنغن أو أمريكية أو بريطانية متعددة الدخول سارية يدخلون بدون فيزا لمدة قصيرة.","توجد فيزا إلكترونية لبعض الجنسيات."],
+  ["UK, US and EU citizens enter visa-free for up to 90 days.","Holders of a valid multiple-entry Schengen, US or UK visa enter visa-free for a short stay.","An e-Visa exists for some nationalities."],
+  ["Britanniques, Américains et Européens entrent sans visa jusqu'à 90 jours.","Les titulaires d'un visa Schengen, américain ou britannique à entrées multiples valide entrent sans visa pour un court séjour.","Un e-Visa existe pour certaines nationalités."],
+  ["Briten, US- und EU-Bürger reisen bis zu 90 Tage visumfrei ein.","Inhaber eines gültigen Schengen-, US- oder UK-Mehrfachvisums reisen für kurze Zeit visumfrei ein.","Für manche Nationalitäten gibt es ein E-Visum."]),
+ entrySrc:{u:"https://www.mfa.gov.mk",t:"mfa.gov.mk"},
+ res:q(["سجّل إقامتك لدى الشرطة خلال 24 ساعة (الفندق يقوم بذلك)."],["Register your stay with the police within 24 hours (hotels do this)."],["Déclarez votre séjour à la police sous 24 heures (l'hôtel s'en charge)."],["Aufenthalt binnen 24 Stunden bei der Polizei melden (Hotels erledigen das)."]),
+ resSrc:{u:"https://www.mfa.gov.mk",t:"mfa.gov.mk"},
+ money:q(["صرّح عن النقد الذي يتجاوز 10,000 يورو."],["Declare cash above €10,000."],["Déclarez les espèces au-delà de 10 000 €."],["Bargeld über 10.000 € anmelden."]),
+ drive:q(["الأضواء مشغلة دائماً، ورسوم الطرق السريعة عند البوابات."],["Headlights always on; motorway tolls at booths."],["Feux toujours allumés ; péages aux barrières."],["Licht immer an; Autobahnmaut an Mautstellen."]),
+ laws:q(["احمل جوازك دائماً."],["Always carry your passport."],["Ayez toujours votre passeport."],["Pass immer mitführen."]),
+ warn:q(["اتفق على سعر التاكسي مسبقاً أو استخدم التاكسي ذا العداد."],["Agree taxi fares in advance or use metered taxis."],["Fixez le prix du taxi à l'avance ou prenez un taxi avec compteur."],["Taxipreis vorher vereinbaren oder Taxameter-Taxi nehmen."]),
+ sos:[...E112,[q("شرطة","Police","Police","Polizei"),"192"],[q("إسعاف","Ambulance","SAMU","Rettung"),"194"]]}
 
 ];
 /* ---------- Watch out: scams & warnings (reviewed Nov 2026) ---------- */
@@ -640,7 +841,7 @@ const NATG=[[q("دول الخليج","Gulf states","Pays du Golfe","Golfstaaten"
  [q("أخرى","Other","Autre","Andere"),["xx"]]];
 const PUR=[["tour",q("سياحة أو زيارة","Tourism or visit","Tourisme ou visite","Tourismus oder Besuch")],["work",q("عمل","Work","Travail","Arbeit")],["study",q("دراسة","Study","Études","Studium")],["live",q("إقامة أو لمّ شمل","Residence or family","Résidence ou famille","Aufenthalt oder Familie")]];
 const GCC=["sa","ae","kw","qa","bh","om"];
-const SCHENGEN=["fr","de","es","it","nl","at","ch","gr"];
+const SCHENGEN=["fr","de","es","it","nl","at","ch","gr","pt","be","lu","dk","se","no","fi","is","pl","cz","sk","hu","si","hr","ee","lv","lt","mt","ro","bg"];
 const ST={home:["ok",q("بلدك","Your country","Votre pays","Ihr Land")],free:["ok",q("تنقل حر","Free movement","Libre circulation","Freizügigkeit")],vf:["ok",q("بدون فيزا","Visa-free","Sans visa","Visumfrei")],
  eta:["mid",q("تصريح إلكتروني","Travel authorisation","Autorisation de voyage","Reisegenehmigung")],evisa:["mid",q("فيزا إلكترونية","e-Visa","e-Visa","E-Visum")],voa:["mid",q("فيزا عند الوصول أو إلكترونية","Visa on arrival or e-Visa","Visa à l'arrivée ou e-Visa","Visum bei Ankunft oder E-Visum")],
  cond:["cau",q("بشروط","Conditional","Sous conditions","Bedingt")],check:["cau",q("تحقق قبل السفر","Check before travel","À vérifier","Vorab prüfen")],visa:["no",q("فيزا من السفارة","Embassy visa needed","Visa d'ambassade requis","Botschaftsvisum nötig")],ban:["no",q("دخول موقوف","Entry suspended","Entrée suspendue","Einreise ausgesetzt")]};
@@ -819,6 +1020,44 @@ function RD(dest,n,spec){
  }
  return null;
 }
+/* Europe outside Schengen: Ireland, Cyprus, Western Balkans */
+const N3={
+ ieCta:q("حرية تنقل ضمن منطقة السفر المشتركة بين بريطانيا وإيرلندا.","Free movement within the UK–Ireland Common Travel Area.","Libre circulation dans la zone de voyage commune Royaume-Uni–Irlande.","Freizügigkeit im gemeinsamen Reisegebiet UK–Irland."),
+ ieUk:q("قد تُعفى من الفيزا الإيرلندية لزيارة قصيرة إذا دخلت بريطانيا أولاً بفيزا زيارة بريطانية، وإلا تحتاج فيزا إيرلندية.","You may be exempt for a short visit if you first enter the UK on a UK visitor visa; otherwise you need an Irish visa.","Exemption possible pour un court séjour si vous entrez d'abord au Royaume-Uni avec un visa visiteur britannique ; sinon visa irlandais.","Für kurze Besuche evtl. befreit, wenn Sie zuerst mit britischem Besuchervisum ins UK einreisen; sonst irisches Visum."),
+ ieVisa:q("تحتاج فيزا إيرلندية (فيزا شنغن لا تكفي).","You need an Irish visa (a Schengen visa is not enough).","Il vous faut un visa irlandais (un visa Schengen ne suffit pas).","Sie brauchen ein irisches Visum (Schengen-Visum reicht nicht)."),
+ cyHold:q("بفيزا شنغن متعددة الدخول سارية تدخل غالباً بدون فيزا قبرصية؛ وإلا فيزا من القنصلية.","With a valid multiple-entry Schengen visa you can usually enter without a Cypriot visa; otherwise a consular visa.","Avec un visa Schengen à entrées multiples valide, entrée généralement sans visa chypriote ; sinon visa consulaire.","Mit gültigem Schengen-Mehrfachvisum meist ohne zyprisches Visum; sonst Konsulatsvisum."),
+ cyVisa:q("تحتاج فيزا قبرصية من القنصلية (قبرص ليست في شنغن).","You need a Cypriot visa from the consulate (Cyprus is not in Schengen).","Il vous faut un visa chypriote du consulat (Chypre n'est pas dans Schengen).","Sie brauchen ein zyprisches Visum vom Konsulat (Zypern ist nicht im Schengen-Raum)."),
+ baSeason:q("إعفاء موسمي من الفيزا في الصيف (يونيو إلى سبتمبر)، وفي غيره تحتاج فيزا إلا إذا كانت معك فيزا شنغن أو أمريكية أو بريطانية.","Seasonal visa exemption in summer (June–September); otherwise a visa unless you hold a Schengen, US or UK visa.","Exemption saisonnière l'été (juin–septembre) ; sinon visa, sauf visa Schengen, américain ou britannique.","Saisonale Visumfreiheit im Sommer (Juni–September); sonst Visum, außer mit Schengen-, US- oder UK-Visum."),
+ bxHold:q("بدون فيزا لمدة قصيرة إذا كانت معك فيزا شنغن أو أمريكية أو بريطانية سارية، أو إقامة فيها.","Visa-free for a short stay with a valid Schengen, US or UK visa or residence.","Sans visa pour un court séjour avec un visa ou une résidence valide (Schengen, États-Unis, Royaume-Uni).","Kurzaufenthalt visumfrei mit gültigem Schengen-, US- oder UK-Visum bzw. Aufenthalt."),
+ rsEv:q("تحتاج فيزا إلكترونية أو من السفارة، إلا إذا كانت معك فيزا أو إقامة سارية من شنغن أو أمريكا أو بريطانيا.","You need an e-Visa or embassy visa, unless you hold a valid Schengen, US or UK visa or residence.","e-Visa ou visa d'ambassade requis, sauf visa ou résidence valide (Schengen, États-Unis, Royaume-Uni).","E-Visum oder Botschaftsvisum nötig, außer mit gültigem Schengen-, US- oder UK-Visum bzw. Aufenthalt."),
+ bxVisa:q("تحتاج فيزا، إلا إذا كانت معك فيزا شنغن أو أمريكية أو بريطانية سارية.","Visa needed, unless you hold a valid Schengen, US or UK visa.","Visa requis, sauf visa Schengen, américain ou britannique valide.","Visum nötig, außer mit gültigem Schengen-, US- oder UK-Visum.")
+};
+function RE(dest,n,spec){
+ const west=["gb","us","eu"].includes(n), hold=H.visa||H.wres;
+ if(["ba","al","rs","me","mk"].includes(dest)&&["br","ar","cl","mx","pe","co"].includes(n)) return ["vf",vfN(90),false];
+ switch(dest){
+ case "ie":
+  if(n==="gb") return ["free",N3.ieCta,true]; if(n==="eu") return ["free",N.euFree,true]; if(n==="us"||n==="ae") return ["vf",vfN(90),true];
+  if(["br","ar","cl","mx"].includes(n)) return ["vf",vfN(90),false]; if(H.visa) return ["cond",N3.ieUk,false]; return ["visa",N3.ieVisa,false];
+ case "cy":
+  if(n==="eu") return ["free",N.euFree,true]; if(["gb","us","ae"].includes(n)) return ["vf",vfN(90),true];
+  if(["br","ar","cl","mx","co","pe"].includes(n)) return ["vf",vfN(90),false]; if(H.visa) return ["cond",N3.cyHold,false]; return ["visa",N3.cyVisa,false];
+ case "ba":
+  if(west) return ["vf",vfN(90),true]; if(["ae","qa","kw","tr","ru","cn"].includes(n)) return ["vf",vfN(90),false];
+  if(["sa","bh","om"].includes(n)) return ["cond",N3.baSeason,false]; if(hold) return ["cond",N3.bxHold,true]; return ["visa",N.embassy,false];
+ case "al":
+  if(west) return ["vf",vfN(90),true]; if(n==="sa") return ["vf",vfN(90),true]; if(GCC.includes(n)||n==="ru"||n==="cn") return ["vf",vfN(90),false];
+  if(hold) return ["cond",N3.bxHold,true]; return ["visa",N.embassy,false];
+ case "rs":
+  if(west||["ae","cn","ru"].includes(n)) return ["vf",vfN(90),true]; if(n==="qa") return ["vf",vfN(90),false];
+  if(hold) return ["cond",N3.bxHold,true]; return ["evisa",N3.rsEv,n==="sa"];
+ case "me":
+  if(west) return ["vf",vfN(90),true]; if(n==="ru") return ["vf",vfN(30),false]; if(hold) return ["cond",N3.bxHold,false]; return ["visa",N3.bxVisa,false];
+ case "mk":
+  if(west) return ["vf",vfN(90),true]; if(hold) return ["cond",N3.bxHold,false]; return ["visa",N3.bxVisa,false];
+ }
+ return null;
+}
 const NEWN=["ye","sd","ly","ps"];
 function RN(dest,n){
  switch(dest){
@@ -841,6 +1080,7 @@ function R(dest,n0){
  if(NEWN.includes(n)){const x=RN(dest,n); if(x) return x}
  if(NEW2.includes(n)){const x=RX(dest,n); if(x) return x}
  {const x=RD(dest,n,spec); if(x) return x}
+ {const x=RE(dest,n,spec); if(x) return x}
  switch(dest){
  case "gb": if(n==="gb") return ["home",null,true]; if(g||n==="us"||n==="eu") return ["eta",N.gbEta,true]; return ["visa",N.gbVisa,true];
  case "sch": if(n==="eu") return ["free",N.euFree,true]; if(["ae","gb","us"].includes(n)) return ["vf",N.schVf,true]; if(g) return ["visa",N.schGcc,true]; return ["visa",N.schVisa,true];
@@ -925,12 +1165,19 @@ const AP={
  az:{ev:"https://evisa.gov.az",visa:"https://evisa.gov.az"},th:{ev:"https://www.thaievisa.go.th",visa:"https://www.thaievisa.go.th",card:"https://tdac.immigration.go.th",cardK:"tdac"},
  id:{ev:"https://evisa.imigrasi.go.id",visa:"https://evisa.imigrasi.go.id"},
  ca:{eta:"https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/eta.html",visa:"https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada.html"},
- cn:{visa:"https://www.visaforchina.cn"},ru:{ev:"https://evisa.kdmid.ru",visa:"https://visa.kdmid.ru"},
+ cn:{visa:"https://www.visaforchina.cn"},
+ pt:{visa:"https://vistos.mne.gov.pt"},be:{visa:"https://dofi.ibz.be"},lu:{visa:"https://guichet.public.lu"},dk:{visa:"https://www.nyidanmark.dk"},
+ se:{visa:"https://www.migrationsverket.se"},no:{visa:"https://www.udi.no"},fi:{visa:"https://um.fi"},is:{visa:"https://utl.is"},
+ pl:{visa:"https://www.gov.pl/web/diplomacy"},cz:{visa:"https://mzv.gov.cz"},sk:{visa:"https://www.mzv.sk"},hu:{visa:"https://konzinfo.mfa.gov.hu"},
+ si:{visa:"https://www.gov.si/en/"},hr:{visa:"https://mvep.gov.hr"},ee:{visa:"https://vm.ee"},lv:{visa:"https://www.mfa.gov.lv"},lt:{visa:"https://www.urm.lt"},
+ mt:{visa:"https://identita.gov.mt"},ro:{visa:"https://evisa.mae.ro"},bg:{visa:"https://www.mfa.bg"},
+ ie:{visa:"https://www.irishimmigration.ie"},cy:{visa:"https://www.mfa.gov.cy"},ba:{visa:"https://www.mvp.gov.ba"},al:{ev:"https://e-albania.al",visa:"https://e-albania.al"},
+ rs:{ev:"https://www.mfa.gov.rs/en",visa:"https://www.mfa.gov.rs/en"},me:{visa:"https://www.gov.me/en"},mk:{visa:"https://www.mfa.gov.mk"},ru:{ev:"https://evisa.kdmid.ru",visa:"https://visa.kdmid.ru"},
  in:{ev:"https://indianvisaonline.gov.in/evisa/",visa:"https://indianvisaonline.gov.in"},pk:{ev:"https://visa.nadra.gov.pk",visa:"https://visa.nadra.gov.pk"},
  br:{ev:"https://brazil.vfsevisa.com",visa:"https://brazil.vfsevisa.com"},ar:{visa:"https://www.argentina.gob.ar/migraciones"},
  co:{visa:"https://www.cancilleria.gov.co",card:"https://www.migracioncolombia.gov.co",cardK:"checkmig"},pe:{visa:"https://www.gob.pe/migraciones"},
  cl:{visa:"https://www.chile.gob.cl"},mx:{ev:"https://www.gob.mx/inm",visa:"https://www.gob.mx/sre"},
  us:{eta:"https://esta.cbp.dhs.gov",visa:"https://travel.state.gov/content/travel/en/us-visas/tourism-visit/visitor.html"}};
-const REG=[[q("أوروبا","Europe","Europe","Europa"),["gb","fr","de","es","it","nl","at","ch","gr","ru"]],[q("العالم العربي","Arab world","Monde arabe","Arabische Welt"),["sa","ae","kw","qa","bh","om","jo","lb","eg","tn","ma"]],[q("آسيا","Asia","Asie","Asien"),["tr","az","ge","cn","in","pk","my","th","id"]],[q("الأمريكتان","The Americas","Amériques","Amerika"),["us","ca","mx","br","ar","co","pe","cl"]]];
+const REG=[[q("أوروبا","Europe","Europe","Europa"),["gb","ie","fr","de","es","pt","it","mt","nl","be","lu","at","ch","gr","cy","dk","se","no","fi","is","pl","cz","sk","hu","si","hr","ee","lv","lt","ro","bg","ba","al","rs","me","mk","ru"]],[q("العالم العربي","Arab world","Monde arabe","Arabische Welt"),["sa","ae","kw","qa","bh","om","jo","lb","eg","tn","ma"]],[q("آسيا","Asia","Asie","Asien"),["tr","az","ge","cn","in","pk","my","th","id"]],[q("الأمريكتان","The Americas","Amériques","Amerika"),["us","ca","mx","br","ar","co","pe","cl"]]];
 const SIX=["ae","sa","eg","qa","om","jo","my","kw","bh","lb","th","id","cn","in","pk","ru","br","pe"];
 const DAYS=new Map([[N.schVf,90],[N.vf90,90],[N.d90,90],[N.maVf,90],[N.maDz,90],[N.myVf,90],[N.myIq,30],[N.geYear,365],[N.geHold,90],[N.joWest,30],[N.saWest,90],[N.saHold,90],[N.saGcc,90],[N.egWest,30],[N.omWest,14],[N.omHold,14],[N.qaUs,90],[N.gbEta,180],[N.gbVisa,180],[N.usEsta,90],[N.usEu,90],[N.caEta,180],[N.caUs,180],[N.th30,30],[N.idVoa,30],[N.tnVf,90],[N.tnIq,15],[N.azEv,30],[N.azGcc,30],[N.lbWest,30],[N.kwWest,30],[N.bhWest,14]]);

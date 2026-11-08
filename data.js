@@ -487,6 +487,7 @@ ca:W(["اطلب eTA من canada.ca فقط بـ7 دولارات كندية؛ ال
 C.forEach(c=>{if(WARN[c.id])c.warn=WARN[c.id]});
 const NAT=[["sa",q("السعودية","Saudi Arabia","Arabie saoudite","Saudi-Arabien")],["ae",q("الإمارات","UAE","Émirats arabes unis","VAE")],["kw",q("الكويت","Kuwait","Koweït","Kuwait")],["qa",q("قطر","Qatar","Qatar","Katar")],["bh",q("البحرين","Bahrain","Bahreïn","Bahrain")],["om",q("عُمان","Oman","Oman","Oman")],
  ["eg",q("مصر","Egypt","Égypte","Ägypten")],["jo",q("الأردن","Jordan","Jordanie","Jordanien")],["ma",q("المغرب","Morocco","Maroc","Marokko")],["dz",q("الجزائر","Algeria","Algérie","Algerien")],["tn",q("تونس","Tunisia","Tunisie","Tunesien")],["iq",q("العراق","Iraq","Irak","Irak")],["lb",q("لبنان","Lebanon","Liban","Libanon")],["sy",q("سوريا","Syria","Syrie","Syrien")],
+ ["ye",q("اليمن","Yemen","Yémen","Jemen")],["sd",q("السودان","Sudan","Soudan","Sudan")],["ly",q("ليبيا","Libya","Libye","Libyen")],["ps",q("فلسطين (جواز السلطة)","Palestine (PA passport)","Palestine (passeport AP)","Palästina (PA-Pass)")],
  ["gb",q("بريطانيا","United Kingdom","Royaume-Uni","Vereinigtes Königreich")],["us",q("الولايات المتحدة","United States","États-Unis","USA")],["fr",q("فرنسا","France","France","Frankreich")],["de",q("ألمانيا","Germany","Allemagne","Deutschland")],["es",q("إسبانيا","Spain","Espagne","Spanien")],["it",q("إيطاليا","Italy","Italie","Italien")],["nl",q("هولندا","Netherlands","Pays-Bas","Niederlande")],["at",q("النمسا","Austria","Autriche","Österreich")],["gr",q("اليونان","Greece","Grèce","Griechenland")],["ch",q("سويسرا","Switzerland","Suisse","Schweiz")],["eu",q("دولة أخرى في الاتحاد الأوروبي","Other EU country","Autre pays de l'UE","Anderer EU-Staat")],["xx",q("جنسية أخرى","Other nationality","Autre nationalité","Andere Staatsangehörigkeit")]];
 const PUR=[["tour",q("سياحة أو زيارة","Tourism or visit","Tourisme ou visite","Tourismus oder Besuch")],["work",q("عمل","Work","Travail","Arbeit")],["study",q("دراسة","Study","Études","Studium")],["live",q("إقامة أو لمّ شمل","Residence or family","Résidence ou famille","Aufenthalt oder Familie")]];
 const GCC=["sa","ae","kw","qa","bh","om"];
@@ -559,6 +560,13 @@ const N={
  caUs:q("تدخل بجواز سفرك الأمريكي فقط.","Enter with your US passport only.","Entrée avec votre seul passeport américain.","Einreise nur mit US-Pass."),
  caEta:q("اطلب تصريح eTA قبل السفر جواً (7 دولارات كندية، حتى 5 سنوات).","Get an eTA before flying (CAD 7, up to 5 years).","Obtenez une AVE (eTA) avant de prendre l'avion (7 $ CA, jusqu'à 5 ans).","Vor dem Flug eine eTA beantragen (7 CAD, bis zu 5 Jahre)."),
  caVisa:q("تحتاج فيزا زيارة (TRV) مع بصمات في مركز التأشيرات.","You need a visitor visa (TRV) with biometrics at a visa centre.","Il vous faut un visa de visiteur (TRV) avec données biométriques dans un centre de visas.","Sie brauchen ein Besuchervisum (TRV) mit Biometrie in einem Visazentrum."),
+ trEv30:q("فيزا إلكترونية لمدة 30 يوماً من evisa.gov.tr فقط.","e-Visa for 30 days, only from evisa.gov.tr.","e-Visa de 30 jours, uniquement sur evisa.gov.tr.","E-Visum für 30 Tage, nur über evisa.gov.tr."),
+ trLy:q("بدون فيزا لمن هم أقل من 16 أو أكثر من 45 سنة (90 يوماً خلال 180)، وإلا فيزا من السفارة.","Visa-free if under 16 or over 45 (90 days in 180); otherwise an embassy visa.","Sans visa pour les moins de 16 ans ou plus de 45 ans (90 jours sur 180) ; sinon visa d'ambassade.","Visumfrei unter 16 oder über 45 Jahren (90 Tage in 180); sonst Botschaftsvisum."),
+ joPs:q("سكان الضفة الغربية بجواز عادي يدخلون عادة بدون فيزا لمدة 30 يوماً، وسكان غزة يحتاجون تصريح عدم ممانعة مسبقاً.","West Bank residents with a regular passport usually enter visa-free for 30 days; Gaza residents need a prior no-objection permit.","Les résidents de Cisjordanie avec un passeport ordinaire entrent généralement sans visa 30 jours ; ceux de Gaza ont besoin d'une autorisation préalable de non-objection.","Einwohner des Westjordanlands mit normalem Pass reisen meist 30 Tage visumfrei ein; Einwohner Gazas brauchen vorab eine Unbedenklichkeitsgenehmigung."),
+ joEv:q("فيزا إلكترونية مسبقة، وقد تحتاج موافقة إضافية. تحقق قبل السفر.","e-Visa in advance, possibly with extra approval. Check before travel.","e-Visa préalable, avec éventuellement une autorisation supplémentaire. À vérifier.","E-Visum vorab, evtl. mit zusätzlicher Genehmigung. Vorab prüfen."),
+ lbCond:q("فيزا عند الوصول بشروط: حجز فندق، وتذكرة عودة، ومبلغ نقدي كافٍ، وألا يكون في الجواز أي ختم إسرائيلي.","Visa on arrival with conditions: hotel booking, return ticket, enough cash, and no Israeli stamps in the passport.","Visa à l'arrivée sous conditions : réservation d'hôtel, billet retour, argent suffisant et aucun tampon israélien dans le passeport.","Visum bei Ankunft unter Bedingungen: Hotelbuchung, Rückflug, genug Bargeld und keine israelischen Stempel im Pass."),
+ azVisa:q("تحتاج فيزا من السفارة، إلا إذا كنت تحمل إقامة خليجية (فيزا عند الوصول).","Embassy visa needed, unless you hold a GCC residence (visa on arrival).","Visa d'ambassade requis, sauf résidence au Golfe (visa à l'arrivée).","Botschaftsvisum nötig, außer mit GCC-Aufenthaltstitel (Visum bei Ankunft)."),
+ geVisa:q("تحتاج فيزا، إلا إذا كنت تحمل فيزا أو إقامة سارية من أمريكا أو بريطانيا أو أوروبا أو الخليج.","Visa needed, unless you hold a valid US, UK, European or GCC visa or residence.","Visa requis, sauf si vous avez un visa ou une résidence valide (États-Unis, Royaume-Uni, Europe ou Golfe).","Visum nötig, außer Sie haben ein gültiges Visum oder einen Aufenthaltstitel aus den USA, dem UK, Europa oder dem Golf."),
  mySy:q("شروط دخول حاملي الجواز السوري غير مؤكدة. تحقق من موقع الهجرة الماليزية أو السفارة قبل الحجز.","Entry rules for Syrian passports aren't confirmed. Check Malaysian Immigration or the embassy before booking.","Les règles pour les passeports syriens ne sont pas confirmées. Vérifiez auprès de l'immigration malaisienne ou de l'ambassade avant de réserver.","Die Regeln für syrische Pässe sind nicht bestätigt. Prüfen Sie vor der Buchung bei der malaysischen Einwanderungsbehörde oder Botschaft."),
  geYear:q("بدون فيزا حتى سنة. التأمين الصحي للسفر إلزامي.","Visa-free up to a year. Travel health insurance is mandatory.","Sans visa jusqu'à un an. L'assurance santé voyage est obligatoire.","Bis zu einem Jahr visumfrei. Reisekrankenversicherung ist Pflicht."),
  geHold:q("قد تدخل بدون فيزا (عادة 90 يوماً خلال 180) بفضل فيزتك أو إقامتك. التأمين الصحي إلزامي.","You may enter visa-free (usually 90 days in 180) thanks to your visa or residence. Health insurance is mandatory.","Entrée possible sans visa (souvent 90 jours sur 180) grâce à votre visa ou résidence. Assurance santé obligatoire.","Dank Visum oder Aufenthalt evtl. visumfrei (meist 90 von 180 Tagen). Krankenversicherung ist Pflicht."),
@@ -569,10 +577,26 @@ const N={
  usBan:q("دخول حاملي هذا الجواز موقوف منذ 1 يناير 2026، إلا في استثناءات محدودة.","Entry on this passport is suspended since 1 Jan 2026, with limited exceptions.","L'entrée avec ce passeport est suspendue depuis le 1er janvier 2026, sauf rares exceptions.","Die Einreise mit diesem Pass ist seit 1. Januar 2026 ausgesetzt, mit wenigen Ausnahmen.")
 };
 const EUN=["fr","de","es","it","nl","at","gr","ch"];
+const NEWN=["ye","sd","ly","ps"];
+function RN(dest,n){
+ switch(dest){
+ case "us": return ["ban",N.usBan,true];
+ case "tr": if(n==="ye"||n==="ps") return ["evisa",N.trEv30,false]; if(n==="ly") return ["cond",N.trLy,false]; return ["visa",N.embassy,false];
+ case "jo": if(n==="ps") return ["check",N.joPs,false]; if(n==="ye"||n==="ly") return ["evisa",N.joEv,false]; return ["visa",N.joRestr,false];
+ case "lb": if(n==="ps") return ["check",N.lbOther,false]; return ["cond",N.lbCond,false];
+ case "eg": return ["visa",N.egSy,false];
+ case "tn": if(n==="ly") return ["vf",N.tnVf,false]; return null;
+ case "az": if(H.gcc) return ["voa",N.azGcc,false]; return ["visa",N.azVisa,false];
+ case "ge": if(H.visa||H.wres||H.gcc) return ["vf",N.geHold,false]; if(n==="sd") return ["evisa",N.geOther,false]; return ["visa",N.geVisa,false];
+ case "my": if(n==="ly"||n==="ps") return ["vf",N.myIq,false]; return ["vf",N.myVf,false];
+ }
+ return null;
+}
 function R(dest,n0){
  const spec=EUN.includes(n0), n=spec?"eu":n0;
  const g=GCC.includes(n), west=["gb","us","eu"].includes(n);
  if(n==="xx") return ["check",N.xx,false];
+ if(NEWN.includes(n)){const x=RN(dest,n); if(x) return x}
  switch(dest){
  case "gb": if(n==="gb") return ["home",null,true]; if(g||n==="us"||n==="eu") return ["eta",N.gbEta,true]; return ["visa",N.gbVisa,true];
  case "sch": if(n==="eu") return ["free",N.euFree,true]; if(["ae","gb","us"].includes(n)) return ["vf",N.schVf,true]; if(g) return ["visa",N.schGcc,true]; return ["visa",N.schVisa,true];

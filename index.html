@@ -540,7 +540,7 @@ function render(){
  const t=UI[lang], T=T2[lang];
  document.documentElement.lang=lang; document.documentElement.dir=lang==="ar"?"rtl":"ltr";
  $("langSel").value=lang; $("appName").textContent=t.name; $("tagline").textContent=t.tag;
- $("disclaimer").textContent=t.disc; $("privacy").textContent=L(PRIV);
+ $("disclaimer").textContent=t.disc; $("privacy").innerHTML=esc(L(PRIV))+` <a href="privacy.html">${esc(L(PRIVL))}</a>`;
  {const B=BK[lang]; $("bk_t").textContent=B.t; $("bk_i").textContent=B.i; $("bk_ex").textContent=B.ex; $("bk_im").textContent=B.im; $("bk_msg").textContent="";}
  $("natL").textContent=t.nat; $("purL").textContent=t.purpose; $("holdL").textContent=t.holds;
  $("h_visaL").textContent=t.hVisa; $("h_wresL").textContent=t.hWres; $("h_gccL").textContent=t.hGcc;
@@ -578,6 +578,7 @@ const stayChg=()=>{STAY={c:$("st_c").value,s:$("st_s").value,x:$("st_x").value};
 ["st_c","st_s","st_x"].forEach(id=>$(id).onchange=stayChg);
 $("stayOut").onclick=e=>{if(e.target.id==="st_clear"){STAY={c:$("st_c").value,s:"",x:""};$("st_s").value="";$("st_x").value="";store("ub_stay",STAY);stayView();alertsView()}};
 /* ---------- Privacy, backup, offline ---------- */
+const PRIVL=q("سياسة الخصوصية","Privacy policy","Politique de confidentialité","Datenschutzerklärung");
 const PRIV=q("خصوصيتك: كل ما تُدخله (جنسيتك ورحلاتك ومواعيدك) يُحفظ في جوالك فقط، ولا يُرسل إلى أي خادم. الأزرار التي تفتح مواقع خارجية لا تنقل بياناتك.",
  "Your privacy: everything you enter (nationality, trips, dates) is stored only on your phone and never sent to any server. Buttons that open outside sites don't pass on your data.",
  "Confidentialité : tout ce que vous saisissez (nationalité, voyages, échéances) reste uniquement sur votre téléphone et n'est envoyé à aucun serveur. Les boutons vers des sites externes ne transmettent pas vos données.",

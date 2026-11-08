@@ -44,6 +44,9 @@ svg.i{width:22px;height:22px;flex:none;fill:none;stroke:currentColor;stroke-widt
 .csearch{position:relative}
 .csearch input{font:inherit;width:100%;min-height:50px;border-radius:14px;border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:10px 14px 10px 14px;padding-inline-start:44px}
 .csearch svg{position:absolute;inset-inline-start:14px;top:50%;transform:translateY(-50%);width:20px;height:20px;fill:none;stroke:var(--muted);stroke-width:2;stroke-linecap:round;pointer-events:none}
+.allbtn{align-self:flex-start;background:none;border:0;color:var(--navy2);font-weight:600;font-size:16px;padding:4px 0;text-decoration:underline;text-underline-offset:4px}
+:root[data-theme="dark"] .allbtn{color:var(--gold)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .allbtn{color:var(--gold)}}
 .cres{display:flex;flex-wrap:wrap;gap:8px}
 .cres:empty{display:none}
 .cres button{border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:7px 14px;font-size:16px;font-weight:600;display:inline-flex;gap:6px;align-items:center}
@@ -218,7 +221,7 @@ nav.tabs button[aria-selected="true"]::before{content:"";position:absolute;top:0
     <div class="picker"><label for="countrySel" id="countryL"></label>
       <div class="csearch"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg><input type="search" id="csearch" autocomplete="off" enterkeyhint="search"></div>
       <div class="cres" id="cres"></div>
-      <div class="selwrap"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg><select id="countrySel" class="big"></select></div>
+      <button type="button" class="allbtn" id="allBtn"></button><div id="allWrap" hidden><div class="selwrap"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg><select id="countrySel" class="big"></select></div></div>
     </div>
     <details class="holdsbox"><summary id="holdL"></summary>
       <div class="holds">
@@ -555,7 +558,7 @@ function render(){
  document.documentElement.lang=lang; document.documentElement.dir=lang==="ar"?"rtl":"ltr";
  $("langSel").value=lang; $("appName").textContent=t.name; $("tagline").textContent=t.tag;
  $("disclaimer").textContent=t.disc; $("privacy").innerHTML=esc(L(PRIV))+` <a href="about.html">${esc(L(ABOUTL))}</a> · <a href="privacy.html">${esc(L(PRIVL))}</a>`;
- $("shareL").textContent=L(SHAREL); $("csearch").placeholder=t.search;
+ $("shareL").textContent=L(SHAREL); allLabel(); $("csearch").placeholder=t.search;
  {const B=BK[lang]; $("bk_t").textContent=B.t; $("bk_i").textContent=B.i; $("bk_ex").textContent=B.ex; $("bk_im").textContent=B.im; $("bk_msg").textContent="";}
  $("natL").textContent=t.nat; $("purL").textContent=t.purpose; $("holdL").textContent=t.holds;
  $("h_visaL").textContent=t.hVisa; $("h_wresL").textContent=t.hWres; $("h_gccL").textContent=t.hGcc;
@@ -578,6 +581,8 @@ $("countrySel").onchange=e=>{sel=e.target.value;store("ub_sel",sel);guide()};
 $("csearch").oninput=searchView;
 $("cres").onclick=e=>{const b=e.target.closest("[data-cid]");if(!b)return;sel=b.dataset.cid;store("ub_sel",sel);$("csearch").value="";$("cres").innerHTML="";stamps();guide();try{document.querySelector(".hero").scrollIntoView({behavior:"smooth",block:"start"})}catch(_){}};
 $("shareBtn").onclick=shareApp;
+$("allBtn").onclick=()=>{$("allWrap").hidden=!$("allWrap").hidden;allLabel()};
+$("countrySel").addEventListener("change",()=>{$("allWrap").hidden=true;allLabel()});
 $("nat").onchange=e=>{nat=e.target.value;profChanged()};
 $("purpose").onchange=e=>{pur=e.target.value;profChanged()};
 [["h_visa","visa"],["h_wres","wres"],["h_gcc","gcc"]].forEach(([id,k])=>$(id).onchange=e=>{H[k]=e.target.checked;profChanged()});
@@ -596,6 +601,8 @@ const stayChg=()=>{STAY={c:$("st_c").value,s:$("st_s").value,x:$("st_x").value};
 ["st_c","st_s","st_x"].forEach(id=>$(id).onchange=stayChg);
 $("stayOut").onclick=e=>{if(e.target.id==="st_clear"){STAY={c:$("st_c").value,s:"",x:""};$("st_s").value="";$("st_x").value="";store("ub_stay",STAY);stayView();alertsView()}};
 /* ---------- Privacy, backup, offline ---------- */
+const ALLL=q("عرض كل الدول","Show all countries","Voir tous les pays","Alle Länder anzeigen"), HIDEL=q("إخفاء القائمة","Hide the list","Masquer la liste","Liste ausblenden");
+const allLabel=()=>{$("allBtn").textContent=L($("allWrap").hidden?ALLL:HIDEL)};
 const ABOUTL=q("عن التطبيق","About","À propos","Über die App");
 const SHAREL=q("شارك","Share","Partager","Teilen");
 const SHARET=q("رفيق الحدود: دليلك القانوني للسفر والإقامة في 38 دولة بأربع لغات","Border Companion: your legal guide to travel and residence in 38 countries, in 4 languages","Border Companion : votre guide juridique du voyage et du séjour dans 38 pays, en 4 langues","Border Companion: Ihr Rechtsratgeber für Reise und Aufenthalt in 38 Ländern, in 4 Sprachen");

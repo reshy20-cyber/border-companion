@@ -631,6 +631,13 @@ const NAT=[["sa",q("السعودية","Saudi Arabia","Arabie saoudite","Saudi-Ar
  ["cn",q("الصين","China","Chine","China")],["ru",q("روسيا","Russia","Russie","Russland")],["in",q("الهند","India","Inde","Indien")],["pk",q("باكستان","Pakistan","Pakistan","Pakistan")],
  ["br",q("البرازيل","Brazil","Brésil","Brasilien")],["ar",q("الأرجنتين","Argentina","Argentine","Argentinien")],["co",q("كولومبيا","Colombia","Colombie","Kolumbien")],["pe",q("بيرو","Peru","Pérou","Peru")],["cl",q("تشيلي","Chile","Chili","Chile")],["mx",q("المكسيك","Mexico","Mexique","Mexiko")],
  ["gb",q("بريطانيا","United Kingdom","Royaume-Uni","Vereinigtes Königreich")],["us",q("الولايات المتحدة","United States","États-Unis","USA")],["fr",q("فرنسا","France","France","Frankreich")],["de",q("ألمانيا","Germany","Allemagne","Deutschland")],["es",q("إسبانيا","Spain","Espagne","Spanien")],["it",q("إيطاليا","Italy","Italie","Italien")],["nl",q("هولندا","Netherlands","Pays-Bas","Niederlande")],["at",q("النمسا","Austria","Autriche","Österreich")],["gr",q("اليونان","Greece","Grèce","Griechenland")],["ch",q("سويسرا","Switzerland","Suisse","Schweiz")],["eu",q("دولة أخرى في الاتحاد الأوروبي","Other EU country","Autre pays de l'UE","Anderer EU-Staat")],["xx",q("جنسية أخرى","Other nationality","Autre nationalité","Andere Staatsangehörigkeit")]];
+/* Nationality groups for the passport menu – every NAT code must appear once */
+const NATG=[[q("دول الخليج","Gulf states","Pays du Golfe","Golfstaaten"),["sa","ae","kw","qa","bh","om"]],
+ [q("الدول العربية","Arab countries","Pays arabes","Arabische Länder"),["eg","jo","ma","dz","tn","iq","lb","sy","ye","sd","ly","ps"]],
+ [q("أوروبا","Europe","Europe","Europa"),["gb","fr","de","es","it","nl","at","gr","ch","ru","eu"]],
+ [q("آسيا","Asia","Asie","Asien"),["cn","in","pk"]],
+ [q("الأمريكتان","The Americas","Amériques","Amerika"),["us","br","ar","co","pe","cl","mx"]],
+ [q("أخرى","Other","Autre","Andere"),["xx"]]];
 const PUR=[["tour",q("سياحة أو زيارة","Tourism or visit","Tourisme ou visite","Tourismus oder Besuch")],["work",q("عمل","Work","Travail","Arbeit")],["study",q("دراسة","Study","Études","Studium")],["live",q("إقامة أو لمّ شمل","Residence or family","Résidence ou famille","Aufenthalt oder Familie")]];
 const GCC=["sa","ae","kw","qa","bh","om"];
 const SCHENGEN=["fr","de","es","it","nl","at","ch","gr"];

@@ -405,7 +405,7 @@ function applyLink(c,st){
 const CL=q("اختر الدولة","Choose a country","Choisissez un pays","Land wählen");
 function stamps(){
  $("countryL").textContent=L(CL);
- $("countrySel").innerHTML=REG.map(([g,ids])=>`<optgroup label="${esc(L(g))}">`+ids.map(id=>{const c=C.find(x=>x.id===id),s=ST[status(id)[0]];return `<option value="${id}"${id===sel?" selected":""}>${esc(L(c.n))} · ${esc(L(s[1]))}</option>`}).join("")+"</optgroup>").join("");
+ $("countrySel").innerHTML=REG.map(([g,ids])=>`<optgroup label="${esc(L(g))}">`+ids.map(id=>{const c=C.find(x=>x.id===id),s=ST[status(id)[0]];return `<option value="${id}"${id===sel?" selected":""}>${esc(L(c.n))}\u00a0·\u00a0${esc(L(s[1])).replace(/ /g,"\u00a0")}</option>`}).join("")+"</optgroup>").join("");
 }
 const IC={entry:'<rect x="5" y="3" width="14" height="18" rx="2"/><circle cx="12" cy="10" r="3"/><path d="M9 16h6"/>',
  res:'<path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/>',
@@ -559,7 +559,7 @@ function render(){
  {const B=BK[lang]; $("bk_t").textContent=B.t; $("bk_i").textContent=B.i; $("bk_ex").textContent=B.ex; $("bk_im").textContent=B.im; $("bk_msg").textContent="";}
  $("natL").textContent=t.nat; $("purL").textContent=t.purpose; $("holdL").textContent=t.holds;
  $("h_visaL").textContent=t.hVisa; $("h_wresL").textContent=t.hWres; $("h_gccL").textContent=t.hGcc;
- $("nat").innerHTML=opts(NAT,nat); $("purpose").innerHTML=opts(PUR,pur);
+ $("nat").innerHTML=NATG.map(([g,ids])=>`<optgroup label="${esc(L(g))}">`+ids.filter(id=>NAT.find(x=>x[0]===id)).map(id=>{const x=NAT.find(y=>y[0]===id);return `<option value="${id}"${id===nat?" selected":""}>${esc(L(x[1]))}</option>`}).join("")+"</optgroup>").join(""); $("purpose").innerHTML=opts(PUR,pur);
  $("h_visa").checked=H.visa; $("h_wres").checked=H.wres; $("h_gcc").checked=H.gcc;
 
  ["countries","trips","dates"].forEach(x=>$("t_"+x).querySelector("span").textContent=T[x]);

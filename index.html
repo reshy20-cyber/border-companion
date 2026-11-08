@@ -37,7 +37,18 @@ svg.i{width:22px;height:22px;flex:none;fill:none;stroke:currentColor;stroke-widt
 /* header */
 .top{background:linear-gradient(160deg,var(--navy2),var(--navy));color:var(--on-navy);border-bottom:3px solid var(--gold)}
 .top .wrap{padding-block:12px 24px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:4px}
-.top .lang{align-self:flex-end;order:-1;font-size:14px;padding:6px 14px}
+.top .topbar{order:-1;align-self:stretch;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.top .lang{font-size:14px;padding:6px 14px}
+.sharebtn{display:inline-flex;align-items:center;gap:6px;background:rgb(255 255 255 / .12);color:var(--on-navy);border:1px solid rgb(255 255 255 / .28);border-radius:999px;padding:6px 14px;font-size:14px;font-weight:600}
+.sharebtn svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round}
+.csearch{position:relative}
+.csearch input{font:inherit;width:100%;min-height:50px;border-radius:14px;border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:10px 14px 10px 14px;padding-inline-start:44px}
+.csearch svg{position:absolute;inset-inline-start:14px;top:50%;transform:translateY(-50%);width:20px;height:20px;fill:none;stroke:var(--muted);stroke-width:2;stroke-linecap:round;pointer-events:none}
+.cres{display:flex;flex-wrap:wrap;gap:8px}
+.cres:empty{display:none}
+.cres button{border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:7px 14px;font-size:16px;font-weight:600;display:inline-flex;gap:6px;align-items:center}
+.cres .none{color:var(--muted);font-size:15px}
+.toast{position:fixed;inset-inline:16px;bottom:calc(96px + env(safe-area-inset-bottom,0px));z-index:30;background:var(--ink);color:var(--bg);border-radius:12px;padding:10px 14px;text-align:center;font-weight:600}
 .logo{width:52px;height:52px;border-radius:14px;flex:none;box-shadow:0 2px 10px rgb(0 0 0 / .25)}
 .brand{min-width:0;display:flex;flex-direction:column;align-items:center;gap:8px}
 .brand h1{font-family:var(--display);font-size:40px;margin:0;line-height:1.15;font-weight:700;letter-spacing:.01em;text-shadow:0 2px 10px rgb(0 0 0 / .25)}
@@ -191,7 +202,7 @@ nav.tabs button[aria-selected="true"]::before{content:"";position:absolute;top:0
 
 <header class="top"><div class="wrap pad">
   <div class="brand"><h1 id="appName">رفيق الحدود</h1><p id="tagline"></p></div>
-  <select class="lang" id="langSel" aria-label="Language"><option value="ar">العربية</option><option value="en">English</option><option value="fr">Français</option><option value="de">Deutsch</option></select>
+  <div class="topbar"><select class="lang" id="langSel" aria-label="Language"><option value="ar">العربية</option><option value="en">English</option><option value="fr">Français</option><option value="de">Deutsch</option></select><button type="button" class="sharebtn" id="shareBtn"><svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg><span id="shareL"></span></button></div>
 </div></header>
 
 <main class="wrap pad">
@@ -205,6 +216,8 @@ nav.tabs button[aria-selected="true"]::before{content:"";position:absolute;top:0
       <div class="selwrap"><svg class="i" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M3 13h18"/></svg><select id="purpose" class="big"></select></div>
     </div>
     <div class="picker"><label for="countrySel" id="countryL"></label>
+      <div class="csearch"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg><input type="search" id="csearch" autocomplete="off" enterkeyhint="search"></div>
+      <div class="cres" id="cres"></div>
       <div class="selwrap"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg><select id="countrySel" class="big"></select></div>
     </div>
     <details class="holdsbox"><summary id="holdL"></summary>
@@ -541,7 +554,8 @@ function render(){
  const t=UI[lang], T=T2[lang];
  document.documentElement.lang=lang; document.documentElement.dir=lang==="ar"?"rtl":"ltr";
  $("langSel").value=lang; $("appName").textContent=t.name; $("tagline").textContent=t.tag;
- $("disclaimer").textContent=t.disc; $("privacy").innerHTML=esc(L(PRIV))+` <a href="privacy.html">${esc(L(PRIVL))}</a>`;
+ $("disclaimer").textContent=t.disc; $("privacy").innerHTML=esc(L(PRIV))+` <a href="about.html">${esc(L(ABOUTL))}</a> · <a href="privacy.html">${esc(L(PRIVL))}</a>`;
+ $("shareL").textContent=L(SHAREL); $("csearch").placeholder=t.search;
  {const B=BK[lang]; $("bk_t").textContent=B.t; $("bk_i").textContent=B.i; $("bk_ex").textContent=B.ex; $("bk_im").textContent=B.im; $("bk_msg").textContent="";}
  $("natL").textContent=t.nat; $("purL").textContent=t.purpose; $("holdL").textContent=t.holds;
  $("h_visaL").textContent=t.hVisa; $("h_wresL").textContent=t.hWres; $("h_gccL").textContent=t.hGcc;
@@ -561,6 +575,9 @@ const EDIT=q("تعديل","Edit","Modifier","Ändern");
 const profChanged=()=>{saveProf();stamps();guide();refresh()};
 $("langSel").onchange=e=>{lang=e.target.value;store("ub_lang",lang);render()};
 $("countrySel").onchange=e=>{sel=e.target.value;store("ub_sel",sel);guide()};
+$("csearch").oninput=searchView;
+$("cres").onclick=e=>{const b=e.target.closest("[data-cid]");if(!b)return;sel=b.dataset.cid;store("ub_sel",sel);$("csearch").value="";$("cres").innerHTML="";stamps();guide();try{document.querySelector(".hero").scrollIntoView({behavior:"smooth",block:"start"})}catch(_){}};
+$("shareBtn").onclick=shareApp;
 $("nat").onchange=e=>{nat=e.target.value;profChanged()};
 $("purpose").onchange=e=>{pur=e.target.value;profChanged()};
 [["h_visa","visa"],["h_wres","wres"],["h_gcc","gcc"]].forEach(([id,k])=>$(id).onchange=e=>{H[k]=e.target.checked;profChanged()});
@@ -579,6 +596,25 @@ const stayChg=()=>{STAY={c:$("st_c").value,s:$("st_s").value,x:$("st_x").value};
 ["st_c","st_s","st_x"].forEach(id=>$(id).onchange=stayChg);
 $("stayOut").onclick=e=>{if(e.target.id==="st_clear"){STAY={c:$("st_c").value,s:"",x:""};$("st_s").value="";$("st_x").value="";store("ub_stay",STAY);stayView();alertsView()}};
 /* ---------- Privacy, backup, offline ---------- */
+const ABOUTL=q("عن التطبيق","About","À propos","Über die App");
+const SHAREL=q("شارك","Share","Partager","Teilen");
+const SHARET=q("رفيق الحدود: دليلك القانوني للسفر والإقامة في 38 دولة بأربع لغات","Border Companion: your legal guide to travel and residence in 38 countries, in 4 languages","Border Companion : votre guide juridique du voyage et du séjour dans 38 pays, en 4 langues","Border Companion: Ihr Rechtsratgeber für Reise und Aufenthalt in 38 Ländern, in 4 Sprachen");
+const COPIED=q("تم نسخ الرابط","Link copied","Lien copié","Link kopiert");
+const SITE="https://reshy20-cyber.github.io/border-companion/";
+function toast(m){const t=document.createElement("div");t.className="toast";t.textContent=m;document.body.appendChild(t);setTimeout(()=>t.remove(),2200)}
+async function shareApp(){
+ const text=L(SHARET);
+ try{ if(navigator.share){await navigator.share({title:"رفيق الحدود · Border Companion",text,url:SITE});return} }catch(e){ if(e&&e.name==="AbortError") return }
+ try{await navigator.clipboard.writeText(text+"\n"+SITE);toast(L(COPIED));return}catch(e){}
+ window.open("https://wa.me/?text="+encodeURIComponent(text+"\n"+SITE),"_blank","noopener");
+}
+const norm=x=>String(x).toLowerCase().replace(/[أإآ]/g,"ا").normalize("NFD").replace(/[\u0300-\u036f\u064b-\u065f\u0670]/g,"").replace(/ة/g,"ه").replace(/ى/g,"ي").trim();
+function searchView(){
+ const v=norm($("csearch").value);
+ if(!v){$("cres").innerHTML="";return}
+ const hits=C.filter(c=>LANGS.some(l=>norm(c.n[l]).includes(v))||c.code.toLowerCase()===v).slice(0,8);
+ $("cres").innerHTML=hits.length?hits.map(c=>`<button type="button" data-cid="${c.id}"><span>${flag(c.code)}</span>${esc(L(c.n))}</button>`).join(""):`<span class="none">${esc(UI[lang].none)}</span>`;
+}
 const PRIVL=q("سياسة الخصوصية","Privacy policy","Politique de confidentialité","Datenschutzerklärung");
 const PRIV=q("خصوصيتك: كل ما تُدخله (جنسيتك ورحلاتك ومواعيدك) يُحفظ في جوالك فقط، ولا يُرسل إلى أي خادم. الأزرار التي تفتح مواقع خارجية لا تنقل بياناتك.",
  "Your privacy: everything you enter (nationality, trips, dates) is stored only on your phone and never sent to any server. Buttons that open outside sites don't pass on your data.",

@@ -619,7 +619,12 @@ const norm=x=>String(x).toLowerCase().replace(/[أإآ]/g,"ا").normalize("NFD")
 function searchView(){
  const v=norm($("csearch").value);
  if(!v){$("cres").innerHTML="";return}
- const hits=C.filter(c=>LANGS.some(l=>norm(c.n[l]).includes(v))||c.code.toLowerCase()===v).slice(0,8);
+ const sc=c=>{const me=norm(L(c.n)), ws=x=>x.split(/[\s\-()]+/).some(w=>w.startsWith(v));
+  if(me.startsWith(v)) return 0; if(ws(me)) return 1; if(c.code.toLowerCase()===v) return 1;
+  if(LANGS.some(l=>norm(c.n[l]).startsWith(v))) return 2; if(LANGS.some(l=>ws(norm(c.n[l])))) return 3;
+  if(v.length>=3&&LANGS.some(l=>norm(c.n[l]).includes(v))) return 4; return 9};
+ const all=C.map(c=>[sc(c),c]).filter(x=>x[0]<9), best=all.some(x=>x[0]<=1)?1:9;
+ const hits=all.filter(x=>x[0]<=best).sort((a,b)=>a[0]-b[0]||L(a[1].n).localeCompare(L(b[1].n))).map(x=>x[1]).slice(0,8);
  $("cres").innerHTML=hits.length?hits.map(c=>`<button type="button" data-cid="${c.id}"><span>${flag(c.code)}</span>${esc(L(c.n))}</button>`).join(""):`<span class="none">${esc(UI[lang].none)}</span>`;
 }
 const PRIVL=q("سياسة الخصوصية","Privacy policy","Politique de confidentialité","Datenschutzerklärung");

@@ -200,6 +200,26 @@ nav.tabs button[aria-selected="true"]{color:var(--navy2)}
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) nav.tabs button[aria-selected="true"]{color:var(--gold)}}
 nav.tabs button[aria-selected="true"]::before{content:"";position:absolute;top:0;width:36px;height:3px;border-radius:0 0 3px 3px;background:var(--gold)}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+
+/* premium */
+.lockcard{text-align:center;border:1.5px dashed var(--gold);background:var(--tint)}
+.lockcard h3{justify-content:center}
+.lockcard p{margin:6px 0 12px;color:var(--muted)}
+.probtn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:50px;padding:10px 22px;border-radius:14px;border:0;background:var(--navy);color:var(--on-navy);font-weight:700;width:100%}
+.probtn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line);font-weight:600;min-height:44px}
+.freeleft{font-size:14px;color:var(--muted);text-align:center;margin:10px 0 0}
+.freeleft a{color:var(--navy2)}
+.prosheet{position:fixed;inset:0;z-index:50;background:rgb(0 0 0 / .45);display:flex;align-items:flex-end;justify-content:center}
+.prosheet .in{background:var(--surface);color:var(--ink);width:100%;max-width:560px;border-radius:22px 22px 0 0;padding:22px max(16px,env(safe-area-inset-left,0px)) calc(22px + env(safe-area-inset-bottom,0px));max-height:90vh;overflow:auto}
+.prosheet h3{font-family:var(--display);font-size:24px;margin:4px 0;text-align:center}
+.prosheet .k{font-size:40px;text-align:center}
+.prosheet ul{list-style:none;padding:0;margin:14px 0}
+.prosheet li{display:flex;gap:10px;padding:8px 0;border-bottom:1px solid var(--line)}
+.prosheet .price{text-align:center;margin:12px 0}
+.prosheet .price b{font-size:26px;display:block}
+.prosheet .price small,.prosheet .pnote{color:var(--muted);font-size:14px}
+.prosheet .gap{height:10px}
+.probadge{display:inline-block;background:var(--gold);color:#3a2a00;border-radius:999px;padding:2px 12px;font-size:14px;font-weight:700}
 </style>
 </head><body>
 
@@ -271,6 +291,7 @@ nav.tabs button[aria-selected="true"]::before{content:"";position:absolute;top:0
     </section>
   </div>
 
+  <div id="proCard"></div>
   <p class="disclaimer" id="disclaimer"></p>
   <p class="disclaimer privacy" id="privacy"></p>
 </main>
@@ -280,6 +301,7 @@ nav.tabs button[aria-selected="true"]::before{content:"";position:absolute;top:0
   <button type="button" role="tab" data-v="trips" id="t_trips"><svg class="i" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M3 13h18"/></svg><span></span></button>
   <button type="button" role="tab" data-v="dates" id="t_dates"><svg class="i" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg><span></span></button>
 </div></nav>
+<div id="proSheet" class="prosheet" hidden><div class="in" id="proIn"></div></div>
 <script src="data.js"></script>
 <script>
 const UI={
@@ -436,6 +458,7 @@ function guide(){
   <div class="facts"><span class="chip">${t.cur}: <b>${c.cur}</b></span><span class="chip">${t.side} ${t[c.side]}</span></div>
   <span class="checked">${t.checked}</span></div>
   ${mineCard(c)}
+  ${unlocked(c.id)?`${freeLeftNote(c.id)}
   ${sec("entry",t.entry,list(L(c.entry))+src(c.entrySrc))}
   ${sec("res",t.res,list(L(c.res))+src(c.resSrc))}
   ${sec("money",t.money,list(L(c.money)))}
@@ -443,7 +466,8 @@ function guide(){
   ${sec("laws",t.laws,list(L(c.laws)))}
   ${sec("warn",t.warn,list(L(c.warn)),"warn")}
   ${sec("sos",t.sos,`<div class="sos">${c.sos.map(s=>`<div><span>${esc(L(s[0]))}</span><b>${s[1]}</b></div>`).join("")}</div>`)}
-  ${helpSec(c)}`;
+  ${helpSec(c)}`:`${lockCard()}
+  ${sec("sos",t.sos,`<div class="sos">${c.sos.map(s=>`<div><span>${esc(L(s[0]))}</span><b>${s[1]}</b></div>`).join("")}</div>`)}`}`;
 }
 
 /* ---------- Trips & dates ---------- */
@@ -516,7 +540,7 @@ function tripsView(){
  $("tripList").innerHTML=[...TRIPS].sort((a,b)=>toD(a.s)-toD(b.s)).map(tr=>{
   const c=C.find(x=>x.id===tr.c); if(!c) return "";
   const items=checklist(tr), done=items.filter(i=>tr.done&&tr.done[i[0]]).length, s=toD(tr.s), e=toD(tr.e), len=Math.round((e-s)/DAY)+1, r=status(tr.c), st=ST[r[0]];
-  const over=len>90&&!["home","free"].includes(r[0])?`<div class="note">${T.over90}</div>`:"";
+  const over=len>90&&!["home","free"].includes(r[0])?`<div class="pnote">${T.over90}</div>`:"";
   return `<article class="item st-${st[0]}"><div class="hd"><h3>${esc(L(c.n))}</h3><span class="pill">${esc(L(st[1]))}</span></div>
    <div class="meta">${fmt(s)} → ${fmt(e)} · ${T.stay} ${nd(len)} · ${rel(s)}</div>${over}
    <div class="progress" aria-hidden="true"><i style="width:${Math.round(done/items.length*100)}%"></i></div>
@@ -572,7 +596,7 @@ function render(){
  $("st_c").innerHTML=C.map(c=>`<option value="${c.id}">${esc(L(c.n))}</option>`).join(""); $("st_c").value=STAY.c||sel; $("st_s").value=STAY.s; $("st_x").value=STAY.x;
  $("d_tL").textContent=T.type; $("d_nL").textContent=T.label; $("d_n").placeholder=T.ph; $("d_dL").textContent=T.exp; $("d_add").textContent=T.addDate;
  const tv=$("d_t").value; $("d_t").innerHTML=Object.entries(T.types).map(([k,v])=>`<option value="${k}">${v}</option>`).join(""); if(tv) $("d_t").value=tv;
- stamps(); guide(); refresh(); setView(VIEW);
+ stamps(); guide(); refresh(); setView(VIEW); proCard();
 }
 const EDIT=q("تعديل","Edit","Modifier","Ändern");
 const profChanged=()=>{saveProf();stamps();guide();refresh()};
@@ -628,10 +652,10 @@ function searchView(){
  $("cres").innerHTML=hits.length?hits.map(c=>`<button type="button" data-cid="${c.id}"><span>${flag(c.code)}</span>${esc(L(c.n))}</button>`).join(""):`<span class="none">${esc(UI[lang].none)}</span>`;
 }
 const PRIVL=q("سياسة الخصوصية","Privacy policy","Politique de confidentialité","Datenschutzerklärung");
-const PRIV=q("خصوصيتك: كل ما تُدخله (جنسيتك ورحلاتك ومواعيدك) يُحفظ في جوالك فقط، ولا يُرسل إلى أي خادم. الأزرار التي تفتح مواقع خارجية لا تنقل بياناتك.",
- "Your privacy: everything you enter (nationality, trips, dates) is stored only on your phone and never sent to any server. Buttons that open outside sites don't pass on your data.",
- "Confidentialité : tout ce que vous saisissez (nationalité, voyages, échéances) reste uniquement sur votre téléphone et n'est envoyé à aucun serveur. Les boutons vers des sites externes ne transmettent pas vos données.",
- "Datenschutz: Alles, was Sie eingeben (Nationalität, Reisen, Fristen), bleibt nur auf Ihrem Handy und wird an keinen Server gesendet. Buttons zu externen Seiten geben Ihre Daten nicht weiter.");
+const PRIV=q("خصوصيتك: كل ما تُدخله (جنسيتك ورحلاتك ومواعيدك) يُحفظ في جوالك فقط، ولا يُرسل إلى أي خادم. الأزرار التي تفتح مواقع خارجية لا تنقل بياناتك. عند شراء النسخة المدفوعة فقط، يُرسل رمز الشراء من Google Play إلى خادمنا للتأكد منه، دون أي بيانات شخصية.",
+ "Your privacy: everything you enter (nationality, trips, dates) is stored only on your phone and never sent to any server. Buttons that open outside sites don't pass on your data. Only when you buy Premium, the Google Play purchase code is sent to our server to confirm it, with no personal data.",
+ "Confidentialité : tout ce que vous saisissez (nationalité, voyages, échéances) reste uniquement sur votre téléphone et n'est envoyé à aucun serveur. Les boutons vers des sites externes ne transmettent pas vos données. Uniquement lors de l'achat de Premium, le code d'achat Google Play est envoyé à notre serveur pour le vérifier, sans données personnelles.",
+ "Datenschutz: Alles, was Sie eingeben (Nationalität, Reisen, Fristen), bleibt nur auf Ihrem Handy und wird an keinen Server gesendet. Buttons zu externen Seiten geben Ihre Daten nicht weiter. Nur beim Kauf von Premium wird der Google-Play-Kaufcode zur Prüfung an unseren Server gesendet, ohne persönliche Daten.");
 const BK={ar:{t:"نسخة احتياطية",i:"احفظ رحلاتك ومواعيدك في ملف، لتستعيدها إذا غيّرت جوالك أو مسحت بيانات المتصفح.",ex:"حفظ نسخة احتياطية",im:"استعادة من ملف",ok:"تمت الاستعادة بنجاح.",bad:"الملف غير صالح.",saved:"تم حفظ الملف.",no:"تعذّر حفظ الملف هنا."},
  en:{t:"Backup",i:"Save your trips and dates to a file so you can restore them on a new phone or after clearing browser data.",ex:"Save a backup",im:"Restore from file",ok:"Restored successfully.",bad:"This file isn't valid.",saved:"File saved.",no:"Couldn't save the file here."},
  fr:{t:"Sauvegarde",i:"Enregistrez vos voyages et échéances dans un fichier pour les restaurer sur un nouveau téléphone ou après avoir effacé les données du navigateur.",ex:"Enregistrer une sauvegarde",im:"Restaurer depuis un fichier",ok:"Restauration réussie.",bad:"Ce fichier n'est pas valide.",saved:"Fichier enregistré.",no:"Impossible d'enregistrer le fichier ici."},
@@ -657,6 +681,116 @@ function doImport(file){
 if("serviceWorker" in navigator && /^https?:$/.test(location.protocol) && !window.claude){
  window.addEventListener("load",()=>{navigator.serviceWorker.register("sw.js").catch(()=>{})});
 }
+/* ---------- Premium (Google Play Billing via the Digital Goods API) ----------
+   Free: full details for 5 countries of the user's choice; every country keeps its status and emergency numbers.
+   Premium (one-time purchase "border_premium"): full details for every country.
+   Locks only apply where Premium can be bought: Android (the Google Play app). iPhone and computers get
+   everything until a payment exists there. Add ?preview=free to the address to see the free version anywhere.
+   Every purchase is checked and acknowledged by the shared Supabase function "verify-purchase". */
+const PREMIUM_SKU="border_premium", FREE_COUNTRIES=5, PLAY_ID="app.bordercompanion";
+const VERIFY_URL="https://nwlmoecyepsajayyyugd.supabase.co/functions/v1/verify-purchase", VERIFY_KEY="sb_publishable_rgaE-hjmqV37RU57_C8JEA_yn-0AcEO";
+let PREVIEW_FREE=/[?&#]preview=free/.test(location.search+location.hash);
+try{if(PREVIEW_FREE)sessionStorage.setItem("ub_preview","1");else if(/[?&#]preview=off/.test(location.search+location.hash))sessionStorage.removeItem("ub_preview");PREVIEW_FREE=PREVIEW_FREE||sessionStorage.getItem("ub_preview")==="1"}catch(e){}
+const LOCKS_ON=PREVIEW_FREE||/Android/i.test(navigator.userAgent)||("getDigitalGoodsService" in window);
+let PRO={active:false}, FREE=[];
+try{PRO=JSON.parse(localStorage.getItem("ub_pro")||'{"active":false}');FREE=JSON.parse(localStorage.getItem("ub_free")||"[]")}catch(e){}
+const billing={service:null,price:"",busy:false};
+const isPro=()=>PREVIEW_FREE?false:(!LOCKS_ON||!!PRO.active);
+function unlocked(id){
+ if(isPro()||FREE.includes(id)) return true;
+ if(FREE.length<FREE_COUNTRIES){FREE.push(id);store("ub_free",FREE);return true}
+ return false;
+}
+const PT={
+ name:q("رفيق الحدود Premium","Border Companion Premium","Border Companion Premium","Border Companion Premium"),
+ sub:q("كل التفاصيل لكل الدول، بدفعة واحدة مدى الحياة","Full details for every country, one payment for life","Tous les détails pour chaque pays, un seul paiement à vie","Alle Details für jedes Land, einmal zahlen, für immer"),
+ locked:q("تفاصيل هذه الدولة في النسخة المدفوعة","This country's details are in Premium","Les détails de ce pays sont dans Premium","Die Details zu diesem Land gibt es in Premium"),
+ lockedS:q("استخدمت الدول المجانية الخمس. افتح كل الدول: الإقامة والهجرة، القيادة، العملة، القوانين والتحذيرات.","You've used your 5 free countries. Unlock every country: residence and immigration, driving, money, laws and warnings.","Vous avez utilisé vos 5 pays gratuits. Débloquez tous les pays : séjour et immigration, conduite, argent, lois et mises en garde.","Sie haben Ihre 5 kostenlosen Länder genutzt. Schalten Sie alle Länder frei: Aufenthalt und Einwanderung, Fahren, Geld, Gesetze und Warnungen."),
+ open:q("افتح كل الدول","Unlock all countries","Débloquer tous les pays","Alle Länder freischalten"),
+ left:q("دول مجانية متبقية:","Free countries left:","Pays gratuits restants :","Verbleibende kostenlose Länder:"),
+ b1:q("كل الدول بكل التفاصيل","Every country, every detail","Chaque pays, chaque détail","Jedes Land, jedes Detail"),
+ b2:q("الإقامة والهجرة والقيادة والقوانين المحلية","Residence, immigration, driving and local laws","Séjour, immigration, conduite et lois locales","Aufenthalt, Einwanderung, Fahren und lokale Gesetze"),
+ b3:q("التحذيرات وروابط الطلب الرسمية لكل دولة","Warnings and official application links for each country","Mises en garde et liens officiels pour chaque pays","Warnungen und offizielle Antragslinks für jedes Land"),
+ b4:q("كل الدول الجديدة التي نضيفها لاحقاً","Every new country we add later","Tous les nouveaux pays ajoutés plus tard","Alle Länder, die wir später hinzufügen"),
+ once:q("دفعة واحدة · بدون اشتراك","One payment · no subscription","Un seul paiement · sans abonnement","Einmalige Zahlung · kein Abo"),
+ buy:q("اشترِ الآن","Buy now","Acheter","Jetzt kaufen"),
+ restore:q("استعادة مشترياتي","Restore my purchase","Restaurer mon achat","Kauf wiederherstellen"),
+ later:q("ليس الآن","Not now","Pas maintenant","Nicht jetzt"),
+ active:q("مفعّل","Active","Actif","Aktiv"),
+ thanks:q("شكراً! تم تفعيل النسخة المدفوعة","Thank you! Premium is on","Merci ! Premium est activé","Danke! Premium ist aktiv"),
+ none:q("لا يوجد شراء سابق على هذا الحساب","No earlier purchase on this account","Aucun achat précédent sur ce compte","Kein früherer Kauf auf diesem Konto"),
+ fail:q("لم يكتمل الشراء. حاول مرة أخرى","The purchase didn't go through. Please try again","L'achat n'a pas abouti. Réessayez","Der Kauf hat nicht geklappt. Bitte erneut versuchen"),
+ onlyPlay:q("الشراء متاح من تطبيق رفيق الحدود على Google Play","Buying is available in the Border Companion app on Google Play","L'achat se fait dans l'application Border Companion sur Google Play","Der Kauf ist in der Border-Companion-App bei Google Play möglich")};
+function freeLeftNote(id){
+ if(!LOCKS_ON||isPro()) return "";
+ return `<p class="freeleft">${esc(L(PT.left))} <b>${FREE_COUNTRIES-FREE.length}</b> · <a href="#" data-pro="open">${esc(L(PT.open))}</a></p>`;
+}
+function lockCard(){
+ return `<section class="card lockcard"><div style="font-size:30px">🔒</div><h3>${esc(L(PT.locked))}</h3><p>${esc(L(PT.lockedS))}</p><button type="button" class="probtn" data-pro="open">👑 ${esc(L(PT.open))}</button></section>`;
+}
+function proCard(){
+ const el=$("proCard"); if(!el) return;
+ if(!LOCKS_ON){el.innerHTML="";return}
+ el.innerHTML=isPro()
+  ?`<section class="card" style="text-align:center"><b>👑 ${esc(L(PT.name))}</b> <span class="probadge">${esc(L(PT.active))}</span></section>`
+  :`<section class="card" style="text-align:center"><b>👑 ${esc(L(PT.name))}</b><p class="meta" style="margin:4px 0 10px">${esc(L(PT.sub))}</p><button type="button" class="probtn" data-pro="open">${esc(L(PT.open))}</button></section>`;
+}
+function setPro(active){
+ if(PREVIEW_FREE) return;
+ const was=isPro(); PRO={active:!!active,checked:Date.now()}; store("ub_pro",PRO);
+ if(was!==isPro()){guide();proCard()}
+}
+function closePro(){$("proSheet").hidden=true}
+function paywall(){
+ const ben=[["🌍",PT.b1],["🏠",PT.b2],["⚠️",PT.b3],["✨",PT.b4]];
+ let h=`<div class="k">👑</div><h3>${esc(L(PT.name))}</h3><p class="pnote" style="text-align:center">${esc(L(PT.sub))}</p><ul>${ben.map(b=>`<li><span>${b[0]}</span><b>${esc(L(b[1]))}</b></li>`).join("")}</ul>`;
+ if(isPro()) h+=`<div class="price"><span class="probadge">✓ ${esc(L(PT.active))}</span></div><button type="button" class="probtn ghost" data-pro="close">OK</button>`;
+ else if(billing.service) h+=`<div class="price"><b id="proPrice">${esc(billing.price||"…")}</b><small>${esc(L(PT.once))}</small></div><button type="button" class="probtn" data-pro="buy">${esc(L(PT.buy))}</button><div class="gap"></div><button type="button" class="probtn ghost" data-pro="restore">${esc(L(PT.restore))}</button>`;
+ else h+=`<div class="price"><small>${esc(L(PT.once))}</small></div><p class="pnote" style="text-align:center">📱 ${esc(L(PT.onlyPlay))}</p><a class="probtn" style="text-decoration:none" href="https://play.google.com/store/apps/details?id=${PLAY_ID}" target="_blank" rel="noopener">Google Play</a>`;
+ h+=`<div class="gap"></div><button type="button" class="probtn ghost" data-pro="close">${esc(L(PT.later))}</button>`;
+ $("proIn").innerHTML=h; $("proSheet").hidden=false;
+}
+function verifyPurchase(token){
+ return fetch(VERIFY_URL,{method:"POST",headers:{"Content-Type":"application/json",apikey:VERIFY_KEY,Authorization:"Bearer "+VERIFY_KEY},body:JSON.stringify({purchaseToken:token,sku:PREMIUM_SKU})})
+  .then(r=>r.json().then(d=>{if(!r.ok&&r.status>=500)throw new Error("server");return !!(d&&d.valid)}));
+}
+function initBilling(){
+ if(!("getDigitalGoodsService" in window)) return;
+ window.getDigitalGoodsService("https://play.google.com/billing").then(service=>{
+  billing.service=service;
+  service.getDetails([PREMIUM_SKU]).then(items=>{const it=items&&items[0];
+   if(it&&it.price){try{billing.price=new Intl.NumberFormat(lang,{style:"currency",currency:it.price.currency}).format(it.price.value)}catch(e){billing.price=it.price.value+" "+it.price.currency}}
+   const p=$("proPrice"); if(p) p.textContent=billing.price;}).catch(()=>{});
+  restorePurchases(false);
+ }).catch(()=>{billing.service=null});
+}
+function restorePurchases(manual){
+ if(!billing.service){if(manual)toast(L(PT.onlyPlay));return}
+ billing.service.listPurchases().then(list=>{
+  const p=(list||[]).find(x=>x.itemId===PREMIUM_SKU);
+  if(!p){setPro(false);if(manual)toast(L(PT.none));return}
+  return verifyPurchase(p.purchaseToken).then(ok=>{setPro(ok);if(manual)toast(L(ok?PT.thanks:PT.fail))})
+   .catch(()=>setPro(true)); // server not reachable: trust Google Play's list, check again next launch
+ }).catch(()=>{if(manual)toast(L(PT.fail))});
+}
+function buyPremium(){
+ if(!billing.service||billing.busy) return;
+ if(!window.PaymentRequest){toast(L(PT.fail));return}
+ billing.busy=true; let req;
+ try{req=new PaymentRequest([{supportedMethods:"https://play.google.com/billing",data:{sku:PREMIUM_SKU}}],{total:{label:"Total",amount:{currency:"USD",value:"0"}}})}
+ catch(e){billing.busy=false;toast(L(PT.fail));return}
+ req.show().then(res=>{const token=res.details&&res.details.purchaseToken;
+  return verifyPurchase(token).then(ok=>res.complete(ok?"success":"fail").then(()=>{billing.busy=false;if(ok){closePro();setPro(true);toast(L(PT.thanks))}else toast(L(PT.fail))}))
+   .catch(()=>res.complete("fail").then(()=>{billing.busy=false;toast(L(PT.fail))}));
+ }).catch(()=>{billing.busy=false}); // cancelled
+}
+document.addEventListener("click",e=>{
+ const b=e.target.closest("[data-pro]"); if(!b) return; e.preventDefault();
+ const a=b.dataset.pro; if(a==="open") paywall(); else if(a==="close") closePro(); else if(a==="buy") buyPremium(); else if(a==="restore") restorePurchases(true);
+});
+$("proSheet").addEventListener("click",e=>{if(e.target.id==="proSheet")closePro()});
+
 render();
+initBilling();
 </script>
 </body></html>

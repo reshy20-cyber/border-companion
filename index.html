@@ -695,7 +695,10 @@ const LOCKS_ON=true;
 let PRO={active:false}, FREE=[];
 try{PRO=JSON.parse(localStorage.getItem("ub_pro")||'{"active":false}');FREE=JSON.parse(localStorage.getItem("ub_free")||"[]")}catch(e){}
 const billing={service:null,price:"",busy:false};
-const isPro=()=>PREVIEW_FREE?false:(!LOCKS_ON||!!PRO.active);
+// Google Play review: a code given to reviewers in Play Console (App access) turns Premium on, on that phone only. Only its SHA-256 is kept here.
+const REVIEW_HASH="c5ba73c3d7af08c2f71b83bbbdf0d664e4f8c4d8c2d1fc27785f055a3137fd3e";
+let REVIEW_ON=false; try{REVIEW_ON=localStorage.getItem("ub_review")==="1"}catch(e){}
+const isPro=()=>PREVIEW_FREE?false:(!LOCKS_ON||REVIEW_ON||!!PRO.active);
 function unlocked(id){
  if(isPro()||FREE.includes(id)) return true;
  if(FREE.length<FREE_COUNTRIES){FREE.push(id);store("ub_free",FREE);return true}
@@ -720,6 +723,9 @@ const PT={
  thanks:q("شكراً! تم تفعيل النسخة المدفوعة","Thank you! Premium is on","Merci ! Premium est activé","Danke! Premium ist aktiv"),
  none:q("لا يوجد شراء سابق على هذا الحساب","No earlier purchase on this account","Aucun achat précédent sur ce compte","Kein früherer Kauf auf diesem Konto"),
  fail:q("لم يكتمل الشراء. حاول مرة أخرى","The purchase didn't go through. Please try again","L'achat n'a pas abouti. Réessayez","Der Kauf hat nicht geklappt. Bitte erneut versuchen"),
+ code:q("لدي رمز","I have a code","J'ai un code","Ich habe einen Code"),
+ codeAsk:q("اكتب الرمز","Enter the code","Saisissez le code","Code eingeben"),
+ codeBad:q("هذا الرمز غير صحيح","This code isn't valid","Ce code n'est pas valide","Dieser Code ist ungültig"),
  onlyPlay:q("الشراء متاح من تطبيق رفيق الحدود على Google Play","Buying is available in the Border Companion app on Google Play","L'achat se fait dans l'application Border Companion sur Google Play","Der Kauf ist in der Border-Companion-App bei Google Play möglich")};
 function freeLeftNote(id){
  if(!LOCKS_ON||isPro()) return "";
@@ -747,8 +753,19 @@ function paywall(){
  if(isPro()) h+=`<div class="price"><span class="probadge">✓ ${esc(L(PT.active))}</span></div><button type="button" class="probtn ghost" data-pro="close">OK</button>`;
  else if(billing.service) h+=`<div class="price"><b id="proPrice">${esc(billing.price||"…")}</b><small>${esc(L(PT.once))}</small></div><button type="button" class="probtn" data-pro="buy">${esc(L(PT.buy))}</button><div class="gap"></div><button type="button" class="probtn ghost" data-pro="restore">${esc(L(PT.restore))}</button>`;
  else h+=`<div class="price"><small>${esc(L(PT.once))}</small></div><p class="pnote" style="text-align:center">📱 ${esc(L(PT.onlyPlay))}</p><a class="probtn" style="text-decoration:none" href="https://play.google.com/store/apps/details?id=${PLAY_ID}" target="_blank" rel="noopener">Google Play</a>`;
+ if(!isPro()) h+=`<div class="gap"></div><button type="button" class="probtn ghost" data-pro="code">${esc(L(PT.code))}</button>`;
  h+=`<div class="gap"></div><button type="button" class="probtn ghost" data-pro="close">${esc(L(PT.later))}</button>`;
  $("proIn").innerHTML=h; $("proSheet").hidden=false;
+}
+function redeemCode(){
+ const c=(window.prompt(L(PT.codeAsk))||"").trim().toUpperCase(); if(!c) return;
+ if(!(window.crypto&&crypto.subtle)){toast(L(PT.codeBad));return}
+ crypto.subtle.digest("SHA-256",new TextEncoder().encode(c)).then(buf=>{
+  const hex=[...new Uint8Array(buf)].map(b=>b.toString(16).padStart(2,"0")).join("");
+  if(hex!==REVIEW_HASH){toast(L(PT.codeBad));return}
+  const was=isPro(); REVIEW_ON=true; try{localStorage.setItem("ub_review","1")}catch(e){}
+  closePro(); if(was!==isPro()){guide();proCard()} toast(L(PT.thanks));
+ });
 }
 function verifyPurchase(token){
  return fetch(VERIFY_URL,{method:"POST",headers:{"Content-Type":"application/json",apikey:VERIFY_KEY,Authorization:"Bearer "+VERIFY_KEY},body:JSON.stringify({purchaseToken:token,sku:PREMIUM_SKU})})
@@ -786,7 +803,7 @@ function buyPremium(){
 }
 document.addEventListener("click",e=>{
  const b=e.target.closest("[data-pro]"); if(!b) return; e.preventDefault();
- const a=b.dataset.pro; if(a==="open") paywall(); else if(a==="close") closePro(); else if(a==="buy") buyPremium(); else if(a==="restore") restorePurchases(true);
+ const a=b.dataset.pro; if(a==="open") paywall(); else if(a==="close") closePro(); else if(a==="buy") buyPremium(); else if(a==="restore") restorePurchases(true); else if(a==="code") redeemCode();
 });
 $("proSheet").addEventListener("click",e=>{if(e.target.id==="proSheet")closePro()});
 
